@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "HRM & Payroll";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">HRM & Payroll</h2>
+        <p class="module-subtitle">Manage employees, attendance, and payroll processing</p>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Total Employees</p>
+                <h3 class="metric-value" style="color: #2563eb;">5</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Active Employees</p>
+                <h3 class="metric-value" style="color: #10b981;">4</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Total Payroll</p>
+                <h3 class="metric-value" style="color: #8b5cf6;">PKR 318K</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Paid Payroll</p>
+                <h3 class="metric-value" style="color: #22c55e;">PKR 203K</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="warehouse-subtabs-row">
+        <a asp-controller="HRM" asp-action="Index" class="subtab-btn-link active-tab">Employees</a>
+        <a asp-controller="HRM" asp-action="Payroll" class="subtab-btn-link">Payroll</a>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search employees..." />
+        </div>
+        <a asp-controller="HRM" asp-action="Create" class="btn-add-warehouse" style="background-color: #2563eb;">
+            <i class="fa-solid fa-plus"></i> Add Employee
+        </a>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>EMPLOYEE ID</th>
+                    <th>EMPLOYEE NAME</th>
+                    <th>DEPARTMENT</th>
+                    <th>POSITION</th>
+                    <th>PHONE</th>
+                    <th>EMAIL</th>
+                    <th>HIRE DATE</th>
+                    <th>STATUS</th>
+                    <th style="text-align: center;">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">EMP-001</td>
+                    <td class="text-bold">Ali Ahmed</td>
+                    <td>Operations</td>
+                    <td>Fleet Manager</td>
+                    <td>+92 300 1234567</td>
+                    <td class="text-muted">ali.ahmed@@logicore.com</td>
+                    <td>2024-01-15</td>
+                    <td><span class="status-badge status-delivered">Active</span></td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a asp-controller="HRM" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-bold">EMP-002</td>
+                    <td class="text-bold">Sara Khan</td>
+                    <td>Finance</td>
+                    <td>Accountant</td>
+                    <td>+92 321 9876543</td>
+                    <td class="text-muted">sara.khan@@logicore.com</td>
+                    <td>2024-03-20</td>
+                    <td><span class="status-badge status-delivered">Active</span></td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a asp-controller="HRM" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-bold">EMP-005</td>
+                    <td class="text-bold">Bilal Khan</td>
+                    <td>Operations</td>
+                    <td>Driver</td>
+                    <td>+92 300 8888888</td>
+                    <td class="text-muted">bilal.khan@@logicore.com</td>
+                    <td>2024-04-15</td>
+                    <td><span class="status-badge status-pending" style="background-color: #fef3c7; color: #d97706;">On Leave</span></td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a asp-controller="HRM" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

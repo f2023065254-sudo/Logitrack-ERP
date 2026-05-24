@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Invoice Details - INV-1001";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h2 class="module-title">Invoice: INV-1001</h2>
+            <p class="module-subtitle">Billing and transaction summary for Ahmed Khan</p>
+        </div>
+        <a asp-controller="Finance" asp-action="Index" class="subtab-btn-link" style="font-weight: 600;"><i class="fa-solid fa-arrow-left"></i> Back to Invoices</a>
+    </div>
+
+    <div class="orders-table-card" style="padding: 40px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);">
+        <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #f1f5f9; padding-bottom: 30px;">
+            <div>
+                <h1 style="color: #2563eb; font-weight: 800; font-size: 28px; margin: 0;">LogiCore ERP</h1>
+                <p class="text-muted" style="margin: 5px 0 0 0; font-size: 13px;">Industrial Area, Phase 5, Lahore</p>
+            </div>
+            <div style="text-align: right;">
+                <h2 style="margin: 0; font-size: 20px; color: #1e293b;">INVOICE</h2>
+                <p style="margin: 5px 0; font-size: 13px; font-weight: bold; color: #475569;">Invoice No: <span style="color: #2563eb;">INV-1001</span></p>
+                <p class="text-muted" style="margin: 0; font-size: 12px;">Date: 2026-05-15</p>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 100px; margin-top: 30px; margin-bottom: 40px;">
+            <div>
+                <h4 style="margin: 0 0 10px 0; font-size: 12px; color: #94a3b8; text-transform: uppercase; tracking: 0.05em;">Billed To:</h4>
+                <h3 style="margin: 0; font-size: 16px; color: #1e293b;">Ahmed Khan</h3>
+                <p class="text-muted" style="margin: 5px 0; font-size: 13px; line-height: 1.5;">Model Town, Block C,<br>Lahore, Pakistan</p>
+                <p class="text-muted" style="margin: 5px 0; font-size: 13px;">0300-1122334</p>
+            </div>
+            <div>
+                <h4 style="margin: 0 0 10px 0; font-size: 12px; color: #94a3b8; text-transform: uppercase; tracking: 0.05em;">Order Reference:</h4>
+                <p style="margin: 0; font-size: 14px; font-weight: 600; color: #475569;">Order ID: ORD-1234</p>
+                <p style="margin: 5px 0; font-size: 14px; font-weight: 600; color: #475569;">Due Date: 2026-05-30</p>
+                <p style="margin: 5px 0; font-size: 14px;"><span class="status-badge status-delivered" style="padding: 4px 12px;">Paid</span></p>
+            </div>
+        </div>
+
+        <table class="orders-data-table" style="box-shadow: none; border: 1px solid #e2e8f0;">
+            <thead>
+                <tr style="background-color: #f8fafc;">
+                    <th>ITEM DESCRIPTION</th>
+                    <th style="text-align: center;">QTY</th>
+                    <th style="text-align: right;">UNIT PRICE</th>
+                    <th style="text-align: right;">TOTAL AMOUNT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">Logistics Shipping Service (Lahore to Karachi)</td>
+                    <td style="text-align: center;">1</td>
+                    <td style="text-align: right;">PKR 12,500</td>
+                    <td class="text-bold" style="text-align: right;">PKR 12,500</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="display: flex; justify-content: flex-end; margin-top: 30px;">
+            <div style="width: 300px; display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; justify-content: space-between; font-size: 14px; color: #64748b;">
+                    <span>Subtotal:</span>
+                    <span>PKR 12,500</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 14px; color: #64748b;">
+                    <span>Tax (0%):</span>
+                    <span>PKR 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; color: #1e293b; border-top: 1px solid #e2e8f0; padding-top: 12px;">
+                    <span>Grand Total:</span>
+                    <span style="color: #2563eb;">PKR 12,500</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

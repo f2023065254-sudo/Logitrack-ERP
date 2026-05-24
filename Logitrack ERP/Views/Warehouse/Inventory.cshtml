@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "Inventory Management";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Warehouse Management</h2>
+        <p class="module-subtitle">Track stock levels, product SKUs, and batch locations</p>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-blue-tint"><i class="fa-solid fa-layer-group text-blue"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Total Warehouses</p>
+                <h3 class="metric-value">3</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-green-tint"><i class="fa-solid fa-boxes-stacked text-green"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Total Products</p>
+                <h3 class="metric-value">5</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-orange-tint"><i class="fa-solid fa-triangle-exclamation text-orange"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Low Stock Alerts</p>
+                <h3 class="metric-value text-danger-highlight">2</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-purple-tint"><i class="fa-solid fa-chart-pie text-purple"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Avg. Utilization</p>
+                <h3 class="metric-value">79%</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="warehouse-subtabs-row">
+        <a asp-controller="Warehouse" asp-action="Index" class="subtab-btn-link">Warehouses</a>
+        <a asp-controller="Warehouse" asp-action="Inventory" class="subtab-btn-link active-tab">Inventory</a>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search inventory by SKU or Name..." />
+        </div>
+        <a asp-controller="Warehouse" asp-action="CreateInventory" class="btn-add-warehouse">
+            <i class="fa-solid fa-plus"></i> Add Stock Item
+        </a>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>SKU ID</th>
+                    <th>PRODUCT NAME</th>
+                    <th>CATEGORY</th>
+                    <th>BATCH NO</th>
+                    <th>STOCK LEVEL</th>
+                    <th>LOCATION STORAGE</th>
+                    <th style="text-align: center;">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">SKU-9981</td>
+                    <td class="text-bold">Industrial Solar Inverters</td>
+                    <td class="text-muted">Electronics</td>
+                    <td>BTCH-2026A</td>
+                    <td><span class="status-badge status-delivered">140 Units</span></td>
+                    <td>Lahore (Bay 4)</td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a asp-controller="Warehouse" asp-action="EditInventory" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-bold">SKU-4412</td>
+                    <td class="text-bold">Lithium Battery Packs Pack 100AH</td>
+                    <td class="text-muted">Power Storage</td>
+                    <td>BTCH-2026C</td>
+                    <td><span class="status-badge status-pending" style="background-color: #fef3c7; color: #d97706;">12 Units (Low)</span></td>
+                    <td>Karachi (Zone B)</td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a href="#" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

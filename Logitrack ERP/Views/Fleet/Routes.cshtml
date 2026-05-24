@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Logistics Routes";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Fleet & Route Management</h2>
+        <p class="module-subtitle">Optimize distribution channels and monitor live route tracking</p>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Total Vehicles</p><h3 class="metric-value">4</h3></div></div>
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Active Drivers</p><h3 class="metric-value">3</h3></div></div>
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Active Routes</p><h3 class="metric-value">1</h3></div></div>
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Total Distance (km)</p><h3 class="metric-value">665</h3></div></div>
+    </div>
+
+    <div class="warehouse-subtabs-row">
+        <a asp-controller="Fleet" asp-action="Index" class="subtab-btn-link">Vehicles</a>
+        <a asp-controller="Fleet" asp-action="Drivers" class="subtab-btn-link">Drivers</a>
+        <a asp-controller="Fleet" asp-action="Routes" class="subtab-btn-link active-tab">Routes</a>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search routes by origin/destination..." />
+        </div>
+        <a asp-controller="Fleet" asp-action="CreateRoute" class="btn-add-warehouse">
+            <i class="fa-solid fa-plus"></i> Create Route
+        </a>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>ROUTE ID</th>
+                    <th>STARTING POINT</th>
+                    <th>DESTINATION HUB</th>
+                    <th>TOTAL DISTANCE</th>
+                    <th>ASSIGNED VEHICLE</th>
+                    <th>ESTIMATED TIME</th>
+                    <th style="text-align: center;">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">RTE-409</td>
+                    <td class="text-bold">Main Warehouse Lahore</td>
+                    <td class="text-bold">Karachi Port Center</td>
+                    <td>665 KM</td>
+                    <td>LHR-1234 (Truck)</td>
+                    <td class="text-muted">11 Hours 30 Mins</td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a asp-controller="Fleet" asp-action="EditRoute" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

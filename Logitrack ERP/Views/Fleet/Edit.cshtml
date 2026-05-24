@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Modify Vehicle Details";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Edit Vehicle: VH-003</h2>
+        <p class="module-subtitle">Update maintenance logs or operational parameters for this asset</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-truck"></i> Vehicle Specifications</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Vehicle Number Plate</label>
+                        <input type="text" class="form-control-input" value="ISB-9012" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Vehicle Type</label>
+                        <select class="form-control-select">
+                            <option value="Truck" selected>Truck</option>
+                            <option value="Van">Van</option>
+                            <option value="Pickup">Pickup</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Weight Capacity (KG)</label>
+                        <input type="text" class="form-control-input" value="7,000" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-wrench"></i> Status & Assignment</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Current Status</label>
+                        <select class="form-control-select">
+                            <option value="Active">Active</option>
+                            <option value="Maintenance" selected>Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Next Maintenance Date</label>
+                        <input type="date" class="form-control-input" value="2026-05-20" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="Fleet" asp-action="Index" class="btn-secondary-cancel">Cancel Changes</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-arrows-rotate"></i> Update Vehicle</button>
+            </div>
+        </form>
+    </div>
+</div>

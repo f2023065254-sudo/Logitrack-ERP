@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Received Payments";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Finance & Billing</h2>
+        <p class="module-subtitle">Track transaction history and client payment methods</p>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Total Revenue</p><h3 class="metric-value" style="color: #10b981;">PKR 21.8K</h3></div></div>
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Pending Amount</p><h3 class="metric-value" style="color: #f97316;">PKR 23.9K</h3></div></div>
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Total Invoices</p><h3 class="metric-value">4</h3></div></div>
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Total Payments</p><h3 class="metric-value">3</h3></div></div>
+    </div>
+
+    <div class="warehouse-subtabs-row">
+        <a asp-controller="Finance" asp-action="Index" class="subtab-btn-link">Invoices</a>
+        <a asp-controller="Finance" asp-action="Payments" class="subtab-btn-link active-tab">Payments</a>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search payments by transaction ID..." />
+        </div>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>TRANSACTION ID</th>
+                    <th>INVOICE ID</th>
+                    <th>PAYMENT METHOD</th>
+                    <th>PAYMENT DATE</th>
+                    <th>AMOUNT PAID</th>
+                    <th>REFERENCE NO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">TXN-9901</td>
+                    <td class="text-muted">INV-1001</td>
+                    <td>Bank Transfer (HBL)</td>
+                    <td>2026-05-18</td>
+                    <td class="text-bold" style="color: #10b981;">PKR 12,500</td>
+                    <td>REF-887122</td>
+                </tr>
+                <tr>
+                    <td class="text-bold">TXN-9902</td>
+                    <td class="text-muted">INV-1004</td>
+                    <td>Cash / Cheque</td>
+                    <td>2026-05-20</td>
+                    <td class="text-bold" style="color: #10b981;">PKR 9,300</td>
+                    <td>CHQ-004125</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Add New Vehicle";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Add New Vehicle</h2>
+        <p class="module-subtitle">Register a new commercial vehicle to the logistical fleet</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-truck"></i> Vehicle Specifications</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Vehicle Number Plate</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. LHR-9999" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Vehicle Type</label>
+                        <select class="form-control-select">
+                            <option value="Truck">Truck</option>
+                            <option value="Van">Van</option>
+                            <option value="Pickup">Pickup</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Weight Capacity (KG)</label>
+                        <input type="number" class="form-control-input" placeholder="e.g. 3500" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-wrench"></i> Status & Assignment</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Initial Status</label>
+                        <select class="form-control-select">
+                            <option value="Active">Active</option>
+                            <option value="Maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Next Maintenance Date</label>
+                        <input type="date" class="form-control-input" value="2026-06-30" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="Fleet" asp-action="Index" class="btn-secondary-cancel">Cancel</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-check"></i> Save Vehicle</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,150 @@
+﻿@{
+    ViewData["Title"] = "Warehouse Management";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Warehouse Management</h2>
+        <p class="module-subtitle">Manage warehouse locations, space allocation, and inventory levels</p>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-blue-tint"><i class="fa-solid fa-layer-group text-blue"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Total Warehouses</p>
+                <h3 class="metric-value">3</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-green-tint"><i class="fa-solid fa-boxes-stacked text-green"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Total Products</p>
+                <h3 class="metric-value">5</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-orange-tint"><i class="fa-solid fa-triangle-exclamation text-orange"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Low Stock Alerts</p>
+                <h3 class="metric-value text-danger-highlight">2</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-purple-tint"><i class="fa-solid fa-chart-pie text-purple"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Avg. Utilization</p>
+                <h3 class="metric-value">79%</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="warehouse-subtabs-row">
+        <a asp-controller="Warehouse" asp-action="Index" class="subtab-btn-link active-tab">Warehouses</a>
+        <a asp-controller="Warehouse" asp-action="Inventory" class="subtab-btn-link">Inventory</a>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search warehouses..." />
+        </div>
+        <a asp-controller="Warehouse" asp-action="Create" class="btn-add-warehouse">
+            <i class="fa-solid fa-plus"></i> Add Warehouse
+        </a>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>WAREHOUSE ID</th>
+                    <th>WAREHOUSE NAME</th>
+                    <th>LOCATION</th>
+                    <th>CAPACITY</th>
+                    <th>CURRENT STOCK</th>
+                    <th>UTILIZATION</th>
+                    <th style="text-align: center;">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">WH-001</td>
+                    <td class="text-bold">Main Warehouse Lahore</td>
+                    <td class="text-muted">Industrial Area, Lahore</td>
+                    <td>50,000 sq ft</td>
+                    <td>42,000 sq ft</td>
+                    <td>
+                        <div class="utilization-progress-cell">
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill fill-high" style="width: 84%;"></div>
+                            </div>
+                            <span class="progress-percentage-text">84%</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a asp-controller="Warehouse" asp-action="Edit" class="action-icon-link edit-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-bold">WH-002</td>
+                    <td class="text-bold">Karachi Distribution Center</td>
+                    <td class="text-muted">Port Area, Karachi</td>
+                    <td>35,000 sq ft</td>
+                    <td>28,000 sq ft</td>
+                    <td>
+                        <div class="utilization-progress-cell">
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill fill-high" style="width: 80%;"></div>
+                            </div>
+                            <span class="progress-percentage-text">80%</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a href="#" class="action-icon-link edit-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-bold">WH-003</td>
+                    <td class="text-bold">Islamabad Hub</td>
+                    <td class="text-muted">I-9 Industrial, Islamabad</td>
+                    <td>25,000 sq ft</td>
+                    <td>18,500 sq ft</td>
+                    <td>
+                        <div class="utilization-progress-cell">
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill fill-mid" style="width: 74%;"></div>
+                            </div>
+                            <span class="progress-percentage-text">74%</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a href="#" class="action-icon-link edit-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

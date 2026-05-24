@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Register New Driver";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Register New Driver</h2>
+        <p class="module-subtitle">Enter personal and licensing details to onboarding a new fleet operator</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-user-plus"></i> Personal Profile</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. Muhammad Amjad" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Contact Number</label>
+                        <input type="tel" class="form-control-input" placeholder="e.g. 0312-3456789" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">CNIC Number</label>
+                        <input type="text" class="form-control-input" placeholder="35201-XXXXXXX-X" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-id-card"></i> License Verification</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">License Number</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. PK-LHR-9921" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">License Type (HTV / LTV)</label>
+                        <select class="form-control-select">
+                            <option value="HTV">HTV (Heavy Commercial)</option>
+                            <option value="LTV">LTV (Light Commercial)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Duty Status</label>
+                        <select class="form-control-select">
+                            <option value="On Duty">On Duty</option>
+                            <option value="Available">Available</option>
+                            <option value="On Leave">On Leave</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="Fleet" asp-action="Drivers" class="btn-secondary-cancel">Cancel</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-check"></i> Save Driver</button>
+            </div>
+        </form>
+    </div>
+</div>

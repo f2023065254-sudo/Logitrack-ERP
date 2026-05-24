@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Order Management";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Order Management</h2>
+        <p class="module-subtitle">Manage customer orders from placement to delivery</p>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search orders by ID or customer..." />
+        </div>
+
+        <div class="action-buttons-group">
+            <button class="btn-filter">
+                <i class="fa-solid fa-filter"></i> All <i class="fa-solid fa-chevron-down arrow-icon"></i>
+            </button>
+            <a asp-controller="Orders" asp-action="Create" class="btn-create-order">
+                <i class="fa-solid fa-plus"></i> Create Order
+            </a>
+        </div>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>ORDER ID</th>
+                    <th>CUSTOMER</th>
+                    <th>ORDER DATE</th>
+                    <th>STATUS</th>
+                    <th>TOTAL AMOUNT</th>
+                    <th>DELIVERY ADDRESS</th>
+                    <th style="text-align: center;">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">ORD-1234</td>
+                    <td>
+                        <div class="customer-info-cell">
+                            <span class="c-name">Ahmed Khan</span>
+                            <span class="c-id">CUST-001</span>
+                        </div>
+                    </td>
+                    <td class="text-muted">2026-05-18</td>
+                    <td><span class="status-badge status-delivered">Delivered</span></td>
+                    <td class="text-bold">PKR 12,500</td>
+                    <td class="text-muted">123 Main St, Lahore</td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a href="#" class="action-icon-link eye-btn"><i class="fa-regular fa-eye"></i></a>
+                            <a asp-controller="Orders" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                            <a href="#" class="action-icon-link download-btn"><i class="fa-solid fa-download"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-bold">ORD-1235</td>
+                    <td>
+                        <div class="customer-info-cell">
+                            <span class="c-name">Fatima Ali</span>
+                            <span class="c-id">CUST-002</span>
+                        </div>
+                    </td>
+                    <td class="text-muted">2026-05-19</td>
+                    <td><span class="status-badge status-transit">In Transit</span></td>
+                    <td class="text-bold">PKR 8,750</td>
+                    <td class="text-muted">456 Park Ave, Karachi</td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a href="#" class="action-icon-link eye-btn"><i class="fa-regular fa-eye"></i></a>
+                            <a asp-controller="Orders" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                            <a href="#" class="action-icon-link download-btn"><i class="fa-solid fa-download"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

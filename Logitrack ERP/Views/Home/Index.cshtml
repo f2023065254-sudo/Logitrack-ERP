@@ -1,0 +1,192 @@
+﻿@{
+    ViewData["Title"] = "Dashboard Overview";
+}
+
+<div class="dashboard-wrapper">
+
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-blue-tint"><i class="fa-solid fa-box-open text-blue"></i></div>
+                <span class="trend-indicator up"><i class="fa-solid fa-arrow-trend-up"></i> 12.5%</span>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Total Orders</p>
+                <h3 class="metric-value">1,234</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-green-tint"><i class="fa-solid fa-warehouse text-green"></i></div>
+                <span class="trend-indicator down"><i class="fa-solid fa-arrow-trend-down"></i> 3.2%</span>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Warehouse Stock</p>
+                <h3 class="metric-value">45,678</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-purple-tint"><i class="fa-solid fa-truck-fast text-purple"></i></div>
+                <span class="trend-indicator up"><i class="fa-solid fa-arrow-trend-up"></i> 5.1%</span>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Active Vehicles</p>
+                <h3 class="metric-value">87</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-orange-tint"><i class="fa-solid fa-dollar-sign text-orange"></i></div>
+                <span class="trend-indicator up"><i class="fa-solid fa-arrow-trend-up"></i> 18.7%</span>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Revenue (PKR)</p>
+                <h3 class="metric-value">2.5M</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <div class="card chart-card-wrapper">
+            <h3 class="card-title">Order Trends</h3>
+            <div class="chart-mockup-container">
+                <div class="chart-y-axis">
+                    <span>800</span><span>600</span><span>400</span><span>200</span><span>0</span>
+                </div>
+                <div class="bar-chart-visual">
+                    <div class="bar-group"><div class="bar bar-orange" style="height: 50%;"></div><span class="bar-label">Jan</span></div>
+                    <div class="bar-group"><div class="bar bar-orange" style="height: 60%;"></div><span class="bar-label">Feb</span></div>
+                    <div class="bar-group"><div class="bar bar-orange" style="height: 70%;"></div><span class="bar-label">Mar</span></div>
+                    <div class="bar-group"><div class="bar bar-orange" style="height: 65%;"></div><span class="bar-label">Apr</span></div>
+                    <div class="bar-group"><div class="bar bar-orange" style="height: 80%;"></div><span class="bar-label">May</span></div>
+                    <div class="bar-group"><div class="bar bar-orange" style="height: 90%;"></div><span class="bar-label">Jun</span></div>
+                </div>
+            </div>
+            <div class="chart-legend-bottom">
+                <span class="legend-dot-item"><span class="dot-color bg-green"></span> Delivered</span>
+                <span class="legend-dot-item"><span class="dot-color bg-orange"></span> Pending</span>
+            </div>
+        </div>
+
+        <div class="card chart-card-wrapper">
+            <h3 class="card-title">Revenue Trends (PKR)</h3>
+            <div class="chart-mockup-container">
+                <div class="chart-y-axis">
+                    <span>320000</span><span>240000</span><span>160000</span><span>80000</span><span>0</span>
+                </div>
+                <div class="line-chart-visual">
+                    <svg viewBox="0 0 500 150" class="svg-line-graph">
+                        <path d="M 10,90 Q 100,60 190,75 T 370,30 T 490,20" fill="none" stroke="#3b82f6" stroke-width="3" />
+                        <circle cx="10" cy="90" r="4" fill="#3b82f6" />
+                        <circle cx="100" cy="68" r="4" fill="#3b82f6" />
+                        <circle cx="190" cy="75" r="4" fill="#3b82f6" />
+                        <circle cx="370" cy="30" r="4" fill="#3b82f6" />
+                        <circle cx="490" cy="20" r="4" fill="#3b82f6" />
+                    </svg>
+                    <div class="line-labels-x">
+                        <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-legend-bottom">
+                <span class="legend-dot-item"><span class="dot-color bg-blue"></span> Revenue</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3 class="card-title">Order Status Distribution</h3>
+            <div class="chart-container">
+                <div class="chart-label-left text-green">Delivered 88%</div>
+                <div class="pie-chart"></div>
+                <div class="chart-labels-right">
+                    <span class="label-cancelled">Cancelled 2%</span>
+                    <span class="label-pending">Pending 4%</span>
+                    <span class="label-transit">In Transit 7%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">Recent Orders</h3>
+            <div class="orders-list">
+                <div class="order-item">
+                    <div class="order-details">
+                        <h4 class="order-id">ORD-1234</h4>
+                        <p class="customer-name">Ahmed Khan</p>
+                        <span class="order-date">2026-05-18</span>
+                    </div>
+                    <div class="order-status-price">
+                        <span class="badge badge-delivered">Delivered</span>
+                        <p class="order-price">PKR 12,500</p>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <div class="order-details">
+                        <h4 class="order-id">ORD-1235</h4>
+                        <p class="customer-name">Fatima Ali</p>
+                        <span class="order-date">2026-05-19</span>
+                    </div>
+                    <div class="order-status-price">
+                        <span class="badge badge-transit">In Transit</span>
+                        <p class="order-price">PKR 8,750</p>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <div class="order-details">
+                        <h4 class="order-id">ORD-1236</h4>
+                        <p class="customer-name">Hassan Raza</p>
+                        <span class="order-date">2026-05-19</span>
+                    </div>
+                    <div class="order-status-price">
+                        <span class="badge badge-pending">Pending</span>
+                        <p class="order-price">PKR 15,200</p>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <div class="order-details">
+                        <h4 class="order-id">ORD-1237</h4>
+                        <p class="customer-name">Ayesha Malik</p>
+                        <span class="order-date">2026-05-18</span>
+                    </div>
+                    <div class="order-status-price">
+                        <span class="badge badge-delivered">Delivered</span>
+                        <p class="order-price">PKR 9,300</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">Alerts & Notifications</h3>
+            <div class="alerts-list">
+                <div class="alert-item">
+                    <i class="fa-solid fa-triangle-exclamation alert-icon-warning"></i>
+                    <div class="alert-content">
+                        <p class="alert-text">Low stock alert: Product #234 (Quantity: 5)</p>
+                        <span class="alert-time">2 hours ago</span>
+                    </div>
+                </div>
+                <div class="alert-item">
+                    <i class="fa-solid fa-circle-check alert-icon-success"></i>
+                    <div class="alert-content">
+                        <p class="alert-text">Vehicle V-045 maintenance completed</p>
+                        <span class="alert-time">4 hours ago</span>
+                    </div>
+                </div>
+                <div class="alert-item">
+                    <i class="fa-solid fa-circle-xmark alert-icon-danger"></i>
+                    <div class="alert-content">
+                        <p class="alert-text">Payment pending for Invoice #INV-892</p>
+                        <span class="alert-time">1 day ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

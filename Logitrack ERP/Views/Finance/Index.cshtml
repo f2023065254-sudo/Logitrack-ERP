@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Finance & Billing";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Finance & Billing</h2>
+        <p class="module-subtitle">Manage invoices, payments, and financial records</p>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Total Revenue</p>
+                <h3 class="metric-value text-green" style="color: #10b981;">PKR 21.8K</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Pending Amount</p>
+                <h3 class="metric-value" style="color: #f97316;">PKR 23.9K</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Total Invoices</p>
+                <h3 class="metric-value">4</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Total Payments</p>
+                <h3 class="metric-value">3</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="warehouse-subtabs-row">
+        <a asp-controller="Finance" asp-action="Index" class="subtab-btn-link active-tab">Invoices</a>
+        <a asp-controller="Finance" asp-action="Payments" class="subtab-btn-link">Payments</a>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search invoices..." />
+        </div>
+        <a asp-controller="Finance" asp-action="Create" class="btn-add-warehouse" style="background-color: #2563eb;">
+            <i class="fa-solid fa-plus"></i> Create Invoice
+        </a>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>INVOICE ID</th>
+                    <th>ORDER ID</th>
+                    <th>CUSTOMER</th>
+                    <th>INVOICE DATE</th>
+                    <th>TOTAL AMOUNT</th>
+                    <th>DUE DATE</th>
+                    <th>STATUS</th>
+                    <th style="text-align: center;">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">INV-1001</td>
+                    <td class="text-muted">ORD-1234</td>
+                    <td class="text-bold">Ahmed Khan</td>
+                    <td>2026-05-15</td>
+                    <td class="text-bold">PKR 12,500</td>
+                    <td>2026-05-30</td>
+                    <td><span class="status-badge status-delivered">Paid</span></td>
+                    <td>
+                        <div class="actions-flex-cell" style="gap: 10px;">
+                            <a asp-controller="Finance" asp-action="Details" class="action-icon-link" title="View" style="color: #3b82f6;"><i class="fa-regular fa-eye"></i></a>
+                            <a href="javascript:void(0);" onclick="window.print();" class="action-icon-link" title="Download" style="color: #10b981;">
+                                <i class="fa-solid fa-download"></i>
+                            </a>
+                            <a asp-controller="Finance" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-bold">INV-1002</td>
+                    <td class="text-muted">ORD-1235</td>
+                    <td class="text-bold">Fatima Ali</td>
+                    <td>2026-05-16</td>
+                    <td class="text-bold">PKR 8,750</td>
+                    <td>2026-05-31</td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>
+                        <div class="actions-flex-cell" style="gap: 10px;">
+                            <a asp-controller="Finance" asp-action="Details" class="action-icon-link" title="View" style="color: #3b82f6;"><i class="fa-regular fa-eye"></i></a>
+                            <a href="javascript:void(0);" onclick="window.print();" class="action-icon-link" title="Download" style="color: #10b981;">
+                                <i class="fa-solid fa-download"></i>
+                            </a>
+                            <a asp-controller="Finance" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-bold">INV-1003</td>
+                    <td class="text-muted">ORD-1236</td>
+                    <td class="text-bold">Hassan Raza</td>
+                    <td>2026-05-17</td>
+                    <td class="text-bold">PKR 15,200</td>
+                    <td>2026-06-01</td>
+                    <td><span class="status-badge status-shipped" style="background-color: #ffeeeb; color: #ef4444;">Overdue</span></td>
+                    <td>
+                        <div class="actions-flex-cell" style="gap: 10px;">
+                            <a asp-controller="Finance" asp-action="Details" class="action-icon-link" title="View" style="color: #3b82f6;"><i class="fa-regular fa-eye"></i></a>
+                            <a href="javascript:void(0);" onclick="window.print();" class="action-icon-link" title="Download" style="color: #10b981;">
+                                <i class="fa-solid fa-download"></i>
+                            </a>
+                            <a asp-controller="Finance" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

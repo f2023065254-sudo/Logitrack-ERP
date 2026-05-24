@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Add Employee";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Add New Employee</h2>
+        <p class="module-subtitle">Enter personal profile and organizational placement records</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-id-card-clip"></i> Personal Information</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. Kamran Akram" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control-input" placeholder="e.g. name@@logicore.com" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control-input" placeholder="e.g. +92 300 1234567" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-sitemap"></i> Job Assignment & Salary</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Department</label>
+                        <select class="form-control-select" required>
+                            <option value="">Select Department</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Finance">Finance</option>
+                            <option value="HR">HR</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Position / Designation</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. Warehouse Supervisor" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Base Salary (PKR)</label>
+                        <input type="number" class="form-control-input" placeholder="e.g. 75000" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="HRM" asp-action="Index" class="btn-secondary-cancel">Cancel</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-user-plus"></i> Save Employee</button>
+            </div>
+        </form>
+    </div>
+</div>

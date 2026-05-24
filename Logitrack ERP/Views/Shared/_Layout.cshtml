@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Logitrack_ERP</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="logo-area">
+                    
+                    <span class="logo-text">Logitrack ui/ux</span>
+                </div>
+
+                <nav class="nav-menu">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")">
+                        <i class="fa-solid fa-chart-pie"></i> Dashboard
+                    </a>
+
+                    <a asp-area="" asp-controller="Orders" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Orders" ? "active" : "")">
+                        <i class="fa-solid fa-box"></i> Order Management
+                    </a>
+
+                    <a asp-area="" asp-controller="Warehouse" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Warehouse" ? "active" : "")">
+                        <i class="fa-solid fa-warehouse"></i> Warehouse
+                    </a>
+
+                    <a asp-area="" asp-controller="Fleet" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Fleet" ? "active" : "")">
+                        <i class="fa-solid fa-route"></i> Fleet & Routes
+                    </a>
+
+                    <a asp-area="" asp-controller="Finance" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Finance" ? "active" : "")">
+                        <i class="fa-solid fa-dollar-sign"></i> Finance & Billing
+                    </a>
+
+                    <a asp-area="" asp-controller="HRM" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "HRM" ? "active" : "")">
+                        <i class="fa-solid fa-users"></i> HRM & Payroll
+                    </a>
+
+                    <a asp-area="" asp-controller="Complaints" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Complaints" ? "active" : "")">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Risk & Complaints
+                    </a>
+
+                    <a asp-area="" asp-controller="Reports" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Reports" ? "active" : "")">
+                        <i class="fa-solid fa-chart-line"></i> Reports & Analytics
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="profile-info">
+                    <p class="profile-email">admin@logicore.com</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            @RenderBody()
+        </main>
+
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

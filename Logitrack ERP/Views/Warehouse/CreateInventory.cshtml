@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Add Inventory Item";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Add Stock Item</h2>
+        <p class="module-subtitle">Add new product stock or batch to warehouse inventory</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-box"></i> Product & Category</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Product Name</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. Lithium Battery Packs" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-control-select" required>
+                            <option value="">Select Category</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Power Storage">Power Storage</option>
+                            <option value="Machinery">Machinery</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Batch Number</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. BTCH-2026E" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-cubes"></i> Stock & Location Assignment</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Stock Level (Units)</label>
+                        <input type="number" class="form-control-input" placeholder="e.g. 150" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Assign Warehouse Location</label>
+                        <select class="form-control-select" required>
+                            <option value="">Select Warehouse Storage</option>
+                            <option value="Lahore (Bay 4)">Lahore (Bay 4)</option>
+                            <option value="Karachi (Zone B)">Karachi (Zone B)</option>
+                            <option value="Islamabad (Zone A)">Islamabad (Zone A)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="Warehouse" asp-action="Inventory" class="btn-secondary-cancel">Cancel</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-check"></i> Save Item</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Modify Employee Profile";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Edit Employee: EMP-001</h2>
+        <p class="module-subtitle">Modify contact details, shift setup, or job specifications</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-user-gear"></i> Update Profile Information</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control-input" value="Ali Ahmed" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control-input" value="ali.ahmed@@logicore.com" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control-input" value="+92 300 1234567" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-briefcase"></i> Status & Assignment</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Department</label>
+                        <select class="form-control-select">
+                            <option value="Operations" selected>Operations</option>
+                            <option value="Finance">Finance</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-control-select">
+                            <option value="Active" selected>Active</option>
+                            <option value="On Leave">On Leave</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="HRM" asp-action="Index" class="btn-secondary-cancel">Cancel Changes</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-arrows-rotate"></i> Update Record</button>
+            </div>
+        </form>
+    </div>
+</div>

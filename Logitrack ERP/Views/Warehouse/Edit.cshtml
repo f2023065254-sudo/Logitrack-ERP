@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Edit Warehouse";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Edit Warehouse: WH-001</h2>
+        <p class="module-subtitle">Update storage capacity and specifications for this location</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-warehouse"></i> Modify Warehouse Info</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Warehouse Name</label>
+                        <input type="text" class="form-control-input" value="Main Warehouse Lahore" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Total Capacity (sq ft)</label>
+                        <input type="text" class="form-control-input" value="50,000" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Current Stock Occupied (sq ft)</label>
+                        <input type="text" class="form-control-input" value="42,000" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-map-pin"></i> Location Details</h3>
+                <div class="input-group full-width-input">
+                    <label class="form-label">Warehouse Address</label>
+                    <textarea class="form-control-textarea" rows="3">Industrial Area, Lahore</textarea>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="Warehouse" asp-action="Index" class="btn-secondary-cancel">Cancel Changes</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-arrows-rotate"></i> Update Warehouse</button>
+            </div>
+        </form>
+    </div>
+</div>

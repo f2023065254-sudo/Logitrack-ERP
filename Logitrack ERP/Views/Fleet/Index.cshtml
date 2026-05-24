@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Fleet & Route Management";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Fleet & Route Management</h2>
+        <p class="module-subtitle">Manage vehicles, drivers, and optimize delivery routes</p>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-blue-tint"><i class="fa-solid fa-truck text-blue"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Total Vehicles</p>
+                <h3 class="metric-value">4</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-green-tint"><i class="fa-solid fa-id-card text-green"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Active Drivers</p>
+                <h3 class="metric-value">3</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-purple-tint"><i class="fa-solid fa-map-location-dot text-purple"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Active Routes</p>
+                <h3 class="metric-value">1</h3>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <div class="metric-icon bg-orange-tint"><i class="fa-solid fa-road text-orange"></i></div>
+            </div>
+            <div class="metric-body">
+                <p class="metric-label">Total Distance (km)</p>
+                <h3 class="metric-value">665</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="warehouse-subtabs-row">
+        <a asp-controller="Fleet" asp-action="Index" class="subtab-btn-link active-tab">Vehicles</a>
+        <a asp-controller="Fleet" asp-action="Drivers" class="subtab-btn-link">Drivers</a>
+        <a asp-controller="Fleet" asp-action="Routes" class="subtab-btn-link">Routes</a>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search vehicles..." />
+        </div>
+        <a asp-controller="Fleet" asp-action="Create" class="btn-add-warehouse">
+            <i class="fa-solid fa-plus"></i> Add Vehicle
+        </a>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>VEHICLE ID</th>
+                    <th>VEHICLE NUMBER</th>
+                    <th>TYPE</th>
+                    <th>CAPACITY (KG)</th>
+                    <th>STATUS</th>
+                    <th>CURRENT DRIVER</th>
+                    <th>NEXT MAINTENANCE</th>
+                    <th style="text-align: center;">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">VH-001</td>
+                    <td class="text-bold">LHR-1234</td>
+                    <td class="text-muted">Truck</td>
+                    <td>5,000</td>
+                    <td><span class="status-badge status-delivered">Active</span></td>
+                    <td>Ali Ahmed</td>
+                    <td class="text-muted">2026-07-15</td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a asp-controller="Fleet" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-bold">VH-002</td>
+                    <td class="text-bold">KHI-5678</td>
+                    <td class="text-muted">Van</td>
+                    <td>2,000</td>
+                    <td><span class="status-badge status-delivered">Active</span></td>
+                    <td>Hassan Raza</td>
+                    <td class="text-muted">2026-08-01</td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a asp-controller="Fleet" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-bold">VH-003</td>
+                    <td class="text-bold">ISB-9012</td>
+                    <td class="text-muted">Truck</td>
+                    <td>7,000</td>
+                    <td><span class="status-badge status-pending">Maintenance</span></td>
+                    <td>N/A</td>
+                    <td class="text-muted">2026-05-20</td>
+                    <td>
+                        <div class="actions-flex-cell">
+                            <a asp-controller="Fleet" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

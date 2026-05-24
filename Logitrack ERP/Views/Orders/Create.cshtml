@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Create New Order";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Create New Order</h2>
+        <p class="module-subtitle">Enter details to register a new customer order into the system</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-user-tag"></i> Customer Information</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Customer Name</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. Ahmed Khan" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Customer ID (Figma Tag)</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. CUST-005" />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Contact Number</label>
+                        <input type="tel" class="form-control-input" placeholder="e.g. 0300-1234567" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-box-open"></i> Order Specification</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Total Amount (PKR)</label>
+                        <input type="number" class="form-control-input" placeholder="e.g. 15000" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Initial Order Status</label>
+                        <select class="form-control-select">
+                            <option value="Pending">Pending</option>
+                            <option value="In Transit">In Transit</option>
+                            <option value="Delivered">Delivered</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Order Date</label>
+                        <input type="date" class="form-control-input" value="2026-05-31" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-map-location-dot"></i> Destination Logistics</h3>
+                <div class="input-group full-width-input">
+                    <label class="form-label">Delivery Address</label>
+                    <textarea class="form-control-textarea" rows="3" placeholder="Enter complete home or commercial warehouse address..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="Orders" asp-action="Index" class="btn-secondary-cancel">Cancel</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-check"></i> Save Order</button>
+            </div>
+
+        </form>
+    </div>
+</div>

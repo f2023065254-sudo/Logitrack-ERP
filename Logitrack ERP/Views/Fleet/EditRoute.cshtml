@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Modify Delivery Route";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Edit Route: RTE-409</h2>
+        <p class="module-subtitle">Update dispatch parameters or reassigned vehicle for this route</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-map-location-dot"></i> Route Dispatch & Hubs</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Starting Point (Origin)</label>
+                        <select class="form-control-select" required>
+                            <option value="Main Warehouse Lahore" selected>Main Warehouse Lahore</option>
+                            <option value="Karachi Distribution Center">Karachi Distribution Center</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Destination Hub</label>
+                        <select class="form-control-select" required>
+                            <option value="Karachi Port Center" selected>Karachi Port Center</option>
+                            <option value="Faisalabad Logistics Hub">Faisalabad Logistics Hub</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Assigned Vehicle</label>
+                        <select class="form-control-select">
+                            <option value="LHR-1234" selected>LHR-1234 (Truck)</option>
+                            <option value="KHI-5678">KHI-5678 (Van)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-route"></i> Distance & Estimation</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Total Distance (KM)</label>
+                        <input type="text" class="form-control-input" value="665" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Estimated Time (Duration)</label>
+                        <input type="text" class="form-control-input" value="11 Hours 30 Mins" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="Fleet" asp-action="Routes" class="btn-secondary-cancel">Cancel Changes</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-arrows-rotate"></i> Update Route</button>
+            </div>
+        </form>
+    </div>
+</div>
