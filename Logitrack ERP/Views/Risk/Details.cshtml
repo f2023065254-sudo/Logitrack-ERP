@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Complaint Case File";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h2 class="module-title">Complaint File: CMP-002</h2>
+            <p class="module-subtitle">Complete audit logs and investigation profile</p>
+        </div>
+        <a asp-controller="Risk" asp-action="Index" class="subtab-btn-link" style="font-weight: 600;"><i class="fa-solid fa-arrow-left"></i> Back to Complaints</a>
+    </div>
+
+    <div class="orders-table-card" style="padding: 40px; background: #ffffff; border-radius: 12px;">
+        <div style="border-bottom: 2px solid #f1f5f9; padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h3 style="margin: 0; color: #1e293b;">Client Statement Profile</h3>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #64748b;">Reported via Portal on 2026-05-15</p>
+            </div>
+            <div>
+                <span class="status-badge status-pending" style="background-color: #e0f2fe; color: #0369a1; padding: 6px 16px;">In Progress</span>
+            </div>
+        </div>
+
+        <div style="margin-top: 25px; background-color: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #0284c7;">
+            <p style="margin: 0; font-size: 15px; color: #334155; line-height: 1.6; font-style: italic;">
+                "Delivery was 2 days late, caused business disruption"
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #f1f5f9;">
+            <div>
+                <h5 style="margin: 0 0 5px 0; color: #94a3b8; font-size: 12px; text-transform: uppercase;">Customer Name</h5>
+                <p style="margin: 0; font-size: 15px; font-weight: 600; color: #1e293b;">Fatima Ali (CUST-002)</p>
+            </div>
+            <div>
+                <h5 style="margin: 0 0 5px 0; color: #94a3b8; font-size: 12px; text-transform: uppercase;">Reference Order</h5>
+                <p style="margin: 0; font-size: 15px; font-weight: 600; color: #2563eb;">ORD-1235</p>
+            </div>
+            <div>
+                <h5 style="margin: 0 0 5px 0; color: #94a3b8; font-size: 12px; text-transform: uppercase;">Assigned Team</h5>
+                <p style="margin: 0; font-size: 15px; font-weight: 600; color: #1e293b;">Operations Support Guild</p>
+            </div>
+        </div>
+    </div>
+</div>

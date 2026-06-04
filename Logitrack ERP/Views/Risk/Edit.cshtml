@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Edit Complaint Status";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Update Ticket: CMP-002</h2>
+        <p class="module-subtitle">Modify complaint lifecycle status or add resolution logs</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-circle-info"></i> Ticket Profile</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Customer</label>
+                        <input type="text" class="form-control-input" value="Fatima Ali" readonly style="background-color: #f1f5f9;" />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Linked Order</label>
+                        <input type="text" class="form-control-input" value="ORD-1235" readonly style="background-color: #f1f5f9;" />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Current Status</label>
+                        <select class="form-control-select">
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress" selected>In Progress</option>
+                            <option value="Resolved">Resolved</option>
+                            <option value="Escalated">Escalated</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="Risk" asp-action="Index" class="btn-secondary-cancel">Cancel Changes</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-arrows-rotate"></i> Update Ticket</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Log Complaint";
+}
+
+<div class="orders-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Log New Customer Complaint</h2>
+        <p class="module-subtitle">Register operational ticket or customer issue tracker</p>
+    </div>
+
+    <div class="form-card-container">
+        <form class="figma-styled-form">
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-bullhorn"></i> Ticket References</h3>
+                <div class="form-grid-3">
+                    <div class="input-group">
+                        <label class="form-label">Customer Name</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. Bilal Mansoor" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Linked Order ID</label>
+                        <input type="text" class="form-control-input" placeholder="e.g. ORD-1240" required />
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Severity Category</label>
+                        <select class="form-control-select" required>
+                            <option value="Low">Low (Minor Delay / Package scratch)</option>
+                            <option value="Medium">Medium (Damaged Content)</option>
+                            <option value="High">High / Critical (Lost Shipment)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-subtitle"><i class="fa-solid fa-pen-to-square"></i> Complaint Statements</h3>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label class="form-label">Detailed Description</label>
+                    <textarea class="form-control-input" rows="4" placeholder="Describe the complete nature of client complaint or transit risk..." style="padding: 12px; font-family: inherit;" required></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <a asp-controller="Risk" asp-action="Index" class="btn-secondary-cancel">Cancel</a>
+                <button type="submit" class="btn-primary-submit"><i class="fa-solid fa-check"></i> File Ticket</button>
+            </div>
+        </form>
+    </div>

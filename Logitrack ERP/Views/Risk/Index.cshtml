@@ -1,0 +1,124 @@
+﻿@{
+    ViewData["Title"] = "Risk & Complaints Management";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Risk & Complaints Management</h2>
+        <p class="module-subtitle">Track and resolve customer complaints and operational risks</p>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Total Complaints</p>
+                <h3 class="metric-value" style="color: #2563eb;">4</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Pending Complaints</p>
+                <h3 class="metric-value" style="color: #ea580c;">3</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Open Risks</p>
+                <h3 class="metric-value" style="color: #dc2626;">4</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Critical Risks</p>
+                <h3 class="metric-value" style="color: #b91c1c;">1</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="warehouse-subtabs-row">
+        <a asp-controller="Risk" asp-action="Index" class="subtab-btn-link active-tab">Complaints</a>
+        <a asp-controller="Risk" asp-action="RiskReports" class="subtab-btn-link">Risk Reports</a>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search complaints..." />
+        </div>
+        <a asp-controller="Risk" asp-action="Create" class="btn-add-warehouse" style="background-color: #2563eb;">
+            <i class="fa-solid fa-plus"></i> Log Complaint
+        </a>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>COMPLAINT ID</th>
+                    <th>CUSTOMER</th>
+                    <th>ORDER ID</th>
+                    <th>COMPLAINT TEXT</th>
+                    <th>STATUS</th>
+                    <th>CREATED DATE</th>
+                    <th style="text-align: center;">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">CMP-001</td>
+                    <td>
+                        <span class="text-bold">Ahmed Khan</span><br />
+                        <small class="text-muted">CUST-001</small>
+                    </td>
+                    <td class="text-muted">ORD-1234</td>
+                    <td>Package delivered with minor damage to outer box</td>
+                    <td><span class="status-badge status-delivered">Resolved</span></td>
+                    <td>2026-05-10</td>
+                    <td>
+                        <div class="actions-flex-cell" style="gap: 10px;">
+                            <a asp-controller="Risk" asp-action="Details" class="action-icon-link" title="View" style="color: #3b82f6;"><i class="fa-regular fa-eye"></i></a>
+                            <a asp-controller="Risk" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-bold">CMP-002</td>
+                    <td>
+                        <span class="text-bold">Fatima Ali</span><br />
+                        <small class="text-muted">CUST-002</small>
+                    </td>
+                    <td class="text-muted">ORD-1235</td>
+                    <td>Delivery was 2 days late, caused business disruption</td>
+                    <td><span class="status-badge status-pending" style="background-color: #e0f2fe; color: #0369a1;">In Progress</span></td>
+                    <td>2026-05-15</td>
+                    <td>
+                        <div class="actions-flex-cell" style="gap: 10px;">
+                            <a asp-controller="Risk" asp-action="Details" class="action-icon-link" title="View" style="color: #3b82f6;"><i class="fa-regular fa-eye"></i></a>
+                            <a asp-controller="Risk" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-bold">CMP-004</td>
+                    <td>
+                        <span class="text-bold">Ayesha Malik</span><br />
+                        <small class="text-muted">CUST-004</small>
+                    </td>
+                    <td class="text-muted">ORD-1237</td>
+                    <td>Driver was unprofessional during delivery</td>
+                    <td><span class="status-badge status-shipped" style="background-color: #fef2f2; color: #dc2626;">Escalated</span></td>
+                    <td>2026-05-17</td>
+                    <td>
+                        <div class="actions-flex-cell" style="gap: 10px;">
+                            <a asp-controller="Risk" asp-action="Details" class="action-icon-link" title="View" style="color: #3b82f6;"><i class="fa-regular fa-eye"></i></a>
+                            <a asp-controller="Risk" asp-action="Edit" class="action-icon-link edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="#" class="action-icon-link delete-btn"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Operational Risk Reports";
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Risk & Complaints Management</h2>
+        <p class="module-subtitle">Monitor and mitigate logistics supply chain risks</p>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Total Complaints</p><h3 class="metric-value">4</h3></div></div>
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Pending Complaints</p><h3 class="metric-value">3</h3></div></div>
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Open Risks</p><h3 class="metric-value" style="color: #dc2626;">4</h3></div></div>
+        <div class="metric-card"><div class="metric-body"><p class="metric-label">Critical Risks</p><h3 class="metric-value" style="color: #b91c1c;">1</h3></div></div>
+    </div>
+
+    <div class="warehouse-subtabs-row">
+        <a asp-controller="Risk" asp-action="Index" class="subtab-btn-link">Complaints</a>
+        <a asp-controller="Risk" asp-action="RiskReports" class="subtab-btn-link active-tab">Risk Reports</a>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search risk incidents..." />
+        </div>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>RISK ID</th>
+                    <th>INCIDENT TYPE</th>
+                    <th>DESCRIPTION</th>
+                    <th>SEVERITY LEVEL</th>
+                    <th>MITIGATION STATUS</th>
+                    <th>REPORTED DATE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-bold">RSK-881</td>
+                    <td class="text-bold">Route Blockage</td>
+                    <td>GT Road maintenance causing 4-hour delay in North route</td>
+                    <td><span class="status-badge status-pending" style="background-color: #fff7ed; color: #ea580c;">Medium</span></td>
+                    <td>Alternative route assigned</td>
+                    <td>2026-06-01</td>
+                </tr>
+                <tr>
+                    <td class="text-bold">RSK-882</td>
+                    <td class="text-bold">Vehicle Breakdown</td>
+                    <td>Faisalabad transit truck engine failure with perishable items</td>
+                    <td><span class="status-badge status-shipped" style="background-color: #fef2f2; color: #dc2626; font-weight: bold;">Critical</span></td>
+                    <td>Backup vehicle dispatched</td>
+                    <td>2026-06-02</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
