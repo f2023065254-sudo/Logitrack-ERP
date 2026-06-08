@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Logitrack_ERP.Models.Product>
+@{
+    ViewData["Title"] = "Product Catalog";
+}
+
+<div class="warehouse-management-wrapper" style="padding: 24px; background-color: #f8fafc; min-height: 100vh;">
+    <div class="module-header" style="margin-bottom: 24px;">
+        <h2 class="module-title" style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">Product Catalog</h2>
+        <p class="module-subtitle" style="color: #64748b; font-size: 0.95rem;">Manage the central database of all products</p>
+    </div>
+
+    <div class="actions-bar" style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <div class="search-box" style="position: relative; width: 60%; max-width: 500px;">
+            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 16px; top: 12px; color: #94a3b8;"></i>
+            <input type="text" placeholder="Search products..." style="width: 100%; padding: 10px 10px 10px 42px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; font-size: 0.95rem;" />
+        </div>
+
+        <a asp-action="Create" style="background-color: #2563eb; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-plus"></i> Add Product
+        </a>
+    </div>
+
+    <div class="table-container" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-transform: uppercase; font-size: 0.75rem;">
+                <tr>
+                    <th style="padding: 16px;">Product ID</th>
+                    <th style="padding: 16px;">Product Name</th>
+                    <th style="padding: 16px;">Price (PKR)</th>
+                    <th style="padding: 16px;">Stock Qty</th>
+                    <th style="padding: 16px;">Unit</th>
+                    <th style="padding: 16px;">Status</th>
+                    <th style="padding: 16px; text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr style="border-bottom: 1px solid #f1f5f9;">
+                            <td style="padding: 16px; font-weight: 600; color: #475569;">PRD-@item.ProductID.ToString("D3")</td>
+                            <td style="padding: 16px; font-weight: 600; color: #0f172a;">@item.ProductName</td>
+                            <td style="padding: 16px; font-weight: 600;">@item.Price.ToString("N2")</td>
+                            <td style="padding: 16px; color: #64748b;">@item.StockQuantity</td>
+                            <td style="padding: 16px; color: #64748b;">@item.Unit</td>
+                            <td style="padding: 16px;">
+                                @if (item.Status == "Available")
+                                {
+                                    <span style="background: #d1fae5; color: #065f46; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">@item.Status</span>
+                                }
+                                else
+                                {
+                                    <span style="background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">@item.Status</span>
+                                }
+                            </td>
+                            <td style="padding: 16px; text-align: right;">
+                                <a asp-action="Edit" asp-route-id="@item.ProductID" style="color: #10b981; margin-right: 12px;"><i class="fa-regular fa-pen-to-square"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.ProductID" style="color: #ef4444;" onclick="return confirm('Delete this product?');"><i class="fa-regular fa-trash-can"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

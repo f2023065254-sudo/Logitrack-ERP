@@ -1,29 +1,33 @@
-﻿@{
+﻿@model Logitrack_ERP.Models.Warehouse
+@{
     ViewData["Title"] = "Edit Warehouse";
 }
 
 <div class="warehouse-management-wrapper">
     <div class="module-header">
-        <h2 class="module-title">Edit Warehouse: WH-001</h2>
+        <h2 class="module-title">Edit Warehouse: WH-@Model.WarehouseID.ToString("D3")</h2>
         <p class="module-subtitle">Update storage capacity and specifications for this location</p>
     </div>
 
     <div class="form-card-container">
-        <form class="figma-styled-form">
+        <form asp-action="Edit" method="post" class="figma-styled-form">
+
+            <input type="hidden" name="WarehouseID" value="@Model.WarehouseID" />
+
             <div class="form-section">
                 <h3 class="section-subtitle"><i class="fa-solid fa-warehouse"></i> Modify Warehouse Info</h3>
                 <div class="form-grid-3">
                     <div class="input-group">
                         <label class="form-label">Warehouse Name</label>
-                        <input type="text" class="form-control-input" value="Main Warehouse Lahore" required />
+                        <input type="text" name="WarehouseName" class="form-control-input" value="@Model.WarehouseName" required />
                     </div>
                     <div class="input-group">
                         <label class="form-label">Total Capacity (sq ft)</label>
-                        <input type="text" class="form-control-input" value="50,000" required />
+                        <input type="number" name="Capacity" class="form-control-input" value="@Model.Capacity" required />
                     </div>
                     <div class="input-group">
                         <label class="form-label">Current Stock Occupied (sq ft)</label>
-                        <input type="text" class="form-control-input" value="42,000" />
+                        <input type="number" name="CurrentStock" class="form-control-input" value="@Model.CurrentStock" />
                     </div>
                 </div>
             </div>
@@ -32,7 +36,7 @@
                 <h3 class="section-subtitle"><i class="fa-solid fa-map-pin"></i> Location Details</h3>
                 <div class="input-group full-width-input">
                     <label class="form-label">Warehouse Address</label>
-                    <textarea class="form-control-textarea" rows="3">Industrial Area, Lahore</textarea>
+                    <textarea name="Location" class="form-control-textarea" rows="3" required>@Model.Location</textarea>
                 </div>
             </div>
 

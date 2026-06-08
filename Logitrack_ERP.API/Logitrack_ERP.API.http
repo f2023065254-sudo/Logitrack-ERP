@@ -1,0 +1,23 @@
+@Logitrack_ERP.API_HostAddress = http://localhost:5248
+
+
+
+### 1. Test Low Stock Report
+GET {{Logitrack_ERP.API_HostAddress}}/api/reports/low-stock
+Accept: application/json
+
+### 2. Test Revenue Summary Report
+GET {{Logitrack_ERP.API_HostAddress}}/api/reports/revenue-summary
+Accept: application/json
+
+### 3. Test Fleet Status Report
+GET {{Logitrack_ERP.API_HostAddress}}/api/reports/fleet-status
+Accept: application/json
+
+### 4. Test Employee Headcount Report
+GET {{Logitrack_ERP.API_HostAddress}}/api/reports/employee-headcount
+Accept: application/json
+
+### 5. Test Critical Risks Report
+GET {{Logitrack_ERP.API_HostAddress}}/api/reports/critical-risks
+Accept: application/json

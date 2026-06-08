@@ -29,6 +29,13 @@
                         <i class="fa-solid fa-chart-pie"></i> Dashboard
                     </a>
 
+                    <a asp-controller="Customer" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Customer" ? "active" : "")">
+                        <i class="fa-solid fa-users"></i> Customers
+                    </a>
+                    <a asp-controller="Product" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Product" ? "active" : "")">
+                        <i class="fa-solid fa-tags"></i> Product 
+                    </a>
+
                     <a asp-area="" asp-controller="Orders" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Orders" ? "active" : "")">
                         <i class="fa-solid fa-box"></i> Order Management
                     </a>
@@ -49,7 +56,7 @@
                         <i class="fa-solid fa-users"></i> HRM & Payroll
                     </a>
 
-                    <a asp-area="" asp-controller="Complaints" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Complaints" ? "active" : "")">
+                    <a asp-area="" asp-controller="Risk" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Complaints" ? "active" : "")">
                         <i class="fa-solid fa-triangle-exclamation"></i> Risk & Complaints
                     </a>
 

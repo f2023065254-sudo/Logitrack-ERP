@@ -1,0 +1,126 @@
+﻿@model IEnumerable<Logitrack_ERP.Models.Complaint>
+
+@{
+    ViewData["Title"] = "Risk & Complaints Management";
+
+    // --- DYNAMIC PARAMETER METRICS ---
+    int totalComplaints = Model != null ? Model.Count() : 0;
+    int pendingComplaints = Model != null ? Model.Count(c => c.Status == "Open" || c.Status == "In Progress") : 0;
+
+    // Placeholder numbers for Risks until we write the RiskReport system next
+    int openRisks = 4;
+    int criticalRisks = 1;
+}
+
+<div class="warehouse-management-wrapper">
+    <div class="module-header">
+        <h2 class="module-title">Risk & Complaints Management</h2>
+        <p class="module-subtitle">Track and resolve customer complaints and operational risks</p>
+    </div>
+
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Total Complaints</p>
+                <h3 class="metric-value" style="color: #2563eb;">@totalComplaints</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Pending Complaints</p>
+                <h3 class="metric-value" style="color: #ea580c;">@pendingComplaints</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Open Risks</p>
+                <h3 class="metric-value" style="color: #dc2626;">@openRisks</h3>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-body">
+                <p class="metric-label">Critical Risks</p>
+                <h3 class="metric-value" style="color: #b91c1c;">@criticalRisks</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="warehouse-subtabs-row">
+        <a asp-controller="Risk" asp-action="Index" class="subtab-btn-link active-tab">Complaints</a>
+        <a asp-controller="Risk" asp-action="RiskReports" class="subtab-btn-link">Risk Reports</a>
+    </div>
+
+    <div class="controls-bar">
+        <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search complaints..." />
+        </div>
+        <a asp-controller="Risk" asp-action="Create" class="btn-add-warehouse" style="background-color: #2563eb; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+            <i class="fa-solid fa-plus"></i> Log Complaint
+        </a>
+    </div>
+
+    <div class="orders-table-card">
+        <table class="orders-data-table">
+            <thead>
+                <tr>
+                    <th>COMPLAINT ID</th>
+                    <th>CUSTOMER</th>
+                    <th>ORDER ID</th>
+                    <th>COMPLAINT TEXT</th>
+                    <th>STATUS</th>
+                    <th>CREATED DATE</th>
+                    <th style="text-align: center;">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-bold">CMP-@item.ComplaintID.ToString("D3")</td>
+                            <td>
+                                <span class="text-bold">@item.CustomerName</span><br />
+                                <small class="text-muted">CUST-@item.CustomerID.ToString("D3")</small>
+                            </td>
+                            <td class="text-muted">ORD-@item.OrderID.ToString("D4")</td>
+                            <td>@item.ComplaintText</td>
+                            <td>
+                                @if (item.Status == "Resolved" || item.Status == "Closed")
+                                {
+                                    <span class="status-badge status-delivered">@item.Status</span>
+                                }
+                                else if (item.Status == "In Progress" || item.Status == "Open")
+                                {
+                                    <span class="status-badge status-pending" style="background-color: #e0f2fe; color: #0369a1;">@item.Status</span>
+                                }
+                                else
+                                {
+                                    <span class="status-badge status-shipped" style="background-color: #fef2f2; color: #dc2626;">@item.Status</span>
+                                }
+                            </td>
+                            <td>@item.CreatedDate</td>
+                            <td>
+                                <div class="actions-flex-cell" style="gap: 10px; justify-content: center;">
+                                    <a asp-controller="Risk" asp-action="Details" asp-route-id="@item.ComplaintID" class="action-icon-link" title="View" style="color: #3b82f6;"><i class="fa-regular fa-eye"></i></a>
+                                    <a asp-controller="Risk" asp-action="Edit" asp-route-id="@item.ComplaintID" class="action-icon-link edit-btn" style="color: #10b981;"><i class="fa-regular fa-pen-to-square"></i></a>
+                                    <a asp-controller="Risk" asp-action="Delete" asp-route-id="@item.ComplaintID" class="action-icon-link delete-btn" style="color: #ef4444;" onclick="return confirm('Permanently delete this complaint logs?');"><i class="fa-regular fa-trash-can"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 30px; color: #94a3b8;">
+                            <i class="fa-solid fa-clipboard-check" style="font-size: 2rem; margin-bottom: 8px; display: block; opacity: 0.5;"></i>
+                            No logged complaints found in database records.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

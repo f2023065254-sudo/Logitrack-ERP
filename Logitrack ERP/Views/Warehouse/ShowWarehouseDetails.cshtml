@@ -1,0 +1,27 @@
+﻿@model Logitrack_ERP.Models.Warehouse
+
+@{
+    ViewData["Title"] = "Details Page";
+}
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <td>WarehouseId</td>
+            <td>WarehouseName</td>
+            <td>Location</td>
+            <td>Capacity</td>
+            <td>Current Stock</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.WarehouseID</td>
+            <td>@Model.WarehouseName</td>
+            <td>@Model.Location</td>
+            <td>@Model.Capacity</td>
+            <td>@Model.CurrentStock</td>
+        </tr>
+    </tbody>
+</table>
+<a asp-action="Index" class="btn btn-primary">Back</a>

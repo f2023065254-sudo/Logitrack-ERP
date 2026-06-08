@@ -1,35 +1,60 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Logitrack_ERP.Models;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
 namespace Logitrack_ERP.Controllers
 {
     public class FinanceController : Controller
     {
-        // 1. Invoices Tab (Main Page)
+        private readonly string conn;
+        private Invoice_DAL invoice_dal = new Invoice_DAL();
+
+        public FinanceController(IConfiguration configuration)
+        {
+            conn = configuration.GetConnectionString("DefaultConnection");
+        }
+
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            List<Invoice> allInvoices = invoice_dal.GetAllInvoices(conn);
+            return View(allInvoices);
         }
 
-        // 2. Payments Tab
-        public IActionResult Payments()
-        {
-            return View();
-        }
-
-        // 3. Create Invoice Page
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
-        // Invoice View Details Page
-        public IActionResult Details()
+
+        [HttpPost]
+        public IActionResult Create(Invoice invoice)
         {
-            return View();
+            invoice_dal.AddInvoice(conn, invoice);
+            return RedirectToAction("Index");
         }
-        // 4. Edit Invoice Page
-        public IActionResult Edit()
+
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
-            return View();
+            Invoice invoice = invoice_dal.GetInvoiceById(conn, id);
+            if (invoice == null) return NotFound();
+            return View(invoice);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Invoice invoice)
+        {
+            invoice_dal.UpdateInvoice(conn, invoice);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            invoice_dal.DeleteInvoice(conn, id);
+            return RedirectToAction("Index");
         }
     }
 }

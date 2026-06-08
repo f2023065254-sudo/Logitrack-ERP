@@ -1,70 +1,60 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Logitrack_ERP.Models;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+
 namespace Logitrack_ERP.Controllers
 {
     public class OrdersController : Controller
-
-
     {
-        private IConfiguration configuration;
-        private string? conn;
-        Order_DAL dal = new Order_DAL();
-        public OrdersController(IConfiguration config)
-        {
+        private readonly string conn;
+        private Order_DAL order_dal = new Order_DAL();
 
-            this.configuration = config;
-            conn = config.GetConnectionString("DefaultConnection");
+        public OrdersController(IConfiguration configuration)
+        {
+            conn = configuration.GetConnectionString("DefaultConnection");
         }
 
-        // Jab user link par click karega, yeh method khulega
+        [HttpGet]
         public IActionResult Index()
         {
-            return View(dal.getallorders(conn));
-           
+            List<Order> allOrders = order_dal.getallorders(conn);
+            return View(allOrders);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Order o)
+        public IActionResult Create(Order order)
         {
-            dal.CreateOrder(o, conn);
+            order_dal.CreateOrder(order, conn);
             return RedirectToAction("Index");
-            
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-
-            return View(dal.GetOrder(conn,id));
+            Order order = order_dal.GetOrder(conn, id);
+            if (order == null) return NotFound();
+            return View(order);
         }
 
         [HttpPost]
-        public IActionResult Edit(Order O,int id)
+        public IActionResult Edit(Order order)
         {
-            dal.Update(O,conn,id);
+            order_dal.Update(order, conn, order.OrderID);
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public IActionResult Delete(int id)
         {
-            dal.delete(conn, id);
+            order_dal.delete(conn, id);
             return RedirectToAction("Index");
         }
-
-
-        public IActionResult Details(int id)
-        {
-
-            return View(dal.showdetails(id, conn));
-            
-        }
-
     }
 }

@@ -1,149 +1,141 @@
-﻿@{
+﻿@model IEnumerable<Logitrack_ERP.Models.Warehouse>
+
+@{
     ViewData["Title"] = "Warehouse Management";
+
+    // --- DYNAMIC DASHBOARD CALCULATIONS ---
+    int totalWarehouses = Model != null ? Model.Count() : 0;
+    double totalCapacity = Model != null ? Model.Sum(w => w.Capacity) : 0;
+    double totalStock = Model != null ? Model.Sum(w => w.CurrentStock) : 0;
+
+    // Calculate overall average utilization
+    double avgUtilizationDouble = totalCapacity > 0 ? (totalStock / totalCapacity) * 100 : 0;
+    int avgUtilization = (int)Math.Round(avgUtilizationDouble);
+
+    // Count how many warehouses are over 90% full (Critical Status)
+    int criticalWarehouses = Model != null ? Model.Count(w => w.Capacity > 0 && (w.CurrentStock / w.Capacity) >= 0.90) : 0;
 }
 
-<div class="warehouse-management-wrapper">
-    <div class="module-header">
-        <h2 class="module-title">Warehouse Management</h2>
-        <p class="module-subtitle">Manage warehouse locations, space allocation, and inventory levels</p>
+<div class="warehouse-management-wrapper" style="padding: 24px; background-color: #f8fafc; min-height: 100vh;">
+
+    <div class="module-header" style="margin-bottom: 24px;">
+        <h2 class="module-title" style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 4px;">Warehouse Management</h2>
+        <p class="module-subtitle" style="color: #64748b; font-size: 0.95rem; margin: 0;">Track storage locations, overall capacity, and utilization metrics</p>
     </div>
 
-    <div class="metrics-row">
-        <div class="metric-card">
-            <div class="metric-header">
-                <div class="metric-icon bg-blue-tint"><i class="fa-solid fa-layer-group text-blue"></i></div>
+    <div class="dashboard-cards" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 32px;">
+
+        <div class="stat-card" style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="background-color: #eff6ff; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                <i class="fa-solid fa-layer-group" style="color: #3b82f6; font-size: 1.2rem;"></i>
             </div>
-            <div class="metric-body">
-                <p class="metric-label">Total Warehouses</p>
-                <h3 class="metric-value">3</h3>
-            </div>
+            <p style="color: #64748b; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px;">Total Warehouses</p>
+            <h3 style="color: #0f172a; font-size: 1.8rem; font-weight: 700; margin: 0;">@totalWarehouses</h3>
         </div>
 
-        <div class="metric-card">
-            <div class="metric-header">
-                <div class="metric-icon bg-green-tint"><i class="fa-solid fa-boxes-stacked text-green"></i></div>
+        <div class="stat-card" style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="background-color: #ecfdf5; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                <i class="fa-solid fa-building" style="color: #10b981; font-size: 1.2rem;"></i>
             </div>
-            <div class="metric-body">
-                <p class="metric-label">Total Products</p>
-                <h3 class="metric-value">5</h3>
-            </div>
+            <p style="color: #64748b; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px;">Total Network Capacity</p>
+            <h3 style="color: #0f172a; font-size: 1.8rem; font-weight: 700; margin: 0;">@totalCapacity.ToString("N0") <span style="font-size: 1rem; color: #94a3b8;">sq ft</span></h3>
         </div>
 
-        <div class="metric-card">
-            <div class="metric-header">
-                <div class="metric-icon bg-orange-tint"><i class="fa-solid fa-triangle-exclamation text-orange"></i></div>
+        <div class="stat-card" style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="background-color: #fef2f2; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ef4444; font-size: 1.2rem;"></i>
             </div>
-            <div class="metric-body">
-                <p class="metric-label">Low Stock Alerts</p>
-                <h3 class="metric-value text-danger-highlight">2</h3>
-            </div>
+            <p style="color: #64748b; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px;">High Capacity Alerts (>90%)</p>
+            <h3 style="color: #0f172a; font-size: 1.8rem; font-weight: 700; margin: 0; color: @(criticalWarehouses > 0 ? "#ef4444" : "#0f172a");">@criticalWarehouses</h3>
         </div>
 
-        <div class="metric-card">
-            <div class="metric-header">
-                <div class="metric-icon bg-purple-tint"><i class="fa-solid fa-chart-pie text-purple"></i></div>
+        <div class="stat-card" style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="background-color: #faf5ff; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                <i class="fa-solid fa-chart-pie" style="color: #a855f7; font-size: 1.2rem;"></i>
             </div>
-            <div class="metric-body">
-                <p class="metric-label">Avg. Utilization</p>
-                <h3 class="metric-value">79%</h3>
-            </div>
+            <p style="color: #64748b; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px;">Avg. Network Utilization</p>
+            <h3 style="color: #0f172a; font-size: 1.8rem; font-weight: 700; margin: 0;">@avgUtilization%</h3>
         </div>
+
     </div>
 
-    <div class="warehouse-subtabs-row">
-        <a asp-controller="Warehouse" asp-action="Index" class="subtab-btn-link active-tab">Warehouses</a>
-        <a asp-controller="Warehouse" asp-action="Inventory" class="subtab-btn-link">Inventory</a>
+    <div class="tabs-container" style="border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; display: flex; gap: 24px;">
+        <a asp-controller="Warehouse" asp-action="Index" style="text-decoration: none; color: #2563eb; font-weight: 600; padding-bottom: 12px; border-bottom: 2px solid #2563eb; margin-bottom: -2px;">Warehouses</a>
+        <a asp-controller="Warehouse" asp-action="Inventory" style="text-decoration: none; color: #64748b; font-weight: 500; padding-bottom: 12px;">Inventory</a>
     </div>
 
-    <div class="controls-bar">
-        <div class="search-box-wrapper">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" class="search-input" placeholder="Search warehouses..." />
+    <div class="actions-bar" style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <div class="search-box" style="position: relative; width: 60%; max-width: 500px;">
+            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 16px; top: 12px; color: #94a3b8;"></i>
+            <input type="text" placeholder="Search warehouses by ID or Name..." style="width: 100%; padding: 10px 10px 10px 42px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; font-size: 0.95rem;" />
         </div>
-        <a asp-controller="Warehouse" asp-action="Create" class="btn-add-warehouse">
+
+        <a asp-action="Create" style="background-color: #2563eb; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: background-color 0.2s;">
             <i class="fa-solid fa-plus"></i> Add Warehouse
         </a>
     </div>
 
-    <div class="orders-table-card">
-        <table class="orders-data-table">
-            <thead>
+    <div class="table-container" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em;">
                 <tr>
-                    <th>WAREHOUSE ID</th>
-                    <th>WAREHOUSE NAME</th>
-                    <th>LOCATION</th>
-                    <th>CAPACITY</th>
-                    <th>CURRENT STOCK</th>
-                    <th>UTILIZATION</th>
-                    <th style="text-align: center;">ACTIONS</th>
+                    <th style="padding: 16px; font-weight: 600;">Warehouse ID</th>
+                    <th style="padding: 16px; font-weight: 600;">Warehouse Name</th>
+                    <th style="padding: 16px; font-weight: 600;">Location</th>
+                    <th style="padding: 16px; font-weight: 600;">Capacity</th>
+                    <th style="padding: 16px; font-weight: 600;">Stock Level</th>
+                    <th style="padding: 16px; font-weight: 600;">Utilization</th>
+                    <th style="padding: 16px; font-weight: 600; text-align: right;">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-bold">WH-001</td>
-                    <td class="text-bold">Main Warehouse Lahore</td>
-                    <td class="text-muted">Industrial Area, Lahore</td>
-                    <td>50,000 sq ft</td>
-                    <td>42,000 sq ft</td>
-                    <td>
-                        <div class="utilization-progress-cell">
-                            <div class="progress-bar-track">
-                                <div class="progress-bar-fill fill-high" style="width: 84%;"></div>
-                            </div>
-                            <span class="progress-percentage-text">84%</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="actions-flex-cell">
-                            <a asp-controller="Warehouse" asp-action="Edit" class="action-icon-link edit-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a href="#" class="action-icon-link delete-btn" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
-                        </div>
-                    </td>
-                </tr>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        double itemUtilDouble = item.Capacity > 0 ? ((double)item.CurrentStock / item.Capacity) * 100 : 0;
+                        int itemUtil = (int)Math.Round(itemUtilDouble);
+                        string formattedId = "WH-" + item.WarehouseID.ToString("D3");
 
-                <tr>
-                    <td class="text-bold">WH-002</td>
-                    <td class="text-bold">Karachi Distribution Center</td>
-                    <td class="text-muted">Port Area, Karachi</td>
-                    <td>35,000 sq ft</td>
-                    <td>28,000 sq ft</td>
-                    <td>
-                        <div class="utilization-progress-cell">
-                            <div class="progress-bar-track">
-                                <div class="progress-bar-fill fill-high" style="width: 80%;"></div>
-                            </div>
-                            <span class="progress-percentage-text">80%</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="actions-flex-cell">
-                            <a href="#" class="action-icon-link edit-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a href="#" class="action-icon-link delete-btn" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
-                        </div>
-                    </td>
-                </tr>
+                        // Change color based on how full the warehouse is
+                        string progressColor = itemUtil >= 90 ? "#ef4444" : (itemUtil >= 75 ? "#f59e0b" : "#10b981");
 
-                <tr>
-                    <td class="text-bold">WH-003</td>
-                    <td class="text-bold">Islamabad Hub</td>
-                    <td class="text-muted">I-9 Industrial, Islamabad</td>
-                    <td>25,000 sq ft</td>
-                    <td>18,500 sq ft</td>
-                    <td>
-                        <div class="utilization-progress-cell">
-                            <div class="progress-bar-track">
-                                <div class="progress-bar-fill fill-mid" style="width: 74%;"></div>
-                            </div>
-                            <span class="progress-percentage-text">74%</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="actions-flex-cell">
-                            <a href="#" class="action-icon-link edit-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a href="#" class="action-icon-link delete-btn" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
-                        </div>
-                    </td>
-                </tr>
+                        <tr style="border-bottom: 1px solid #f1f5f9; transition: background-color 0.15s;">
+                            <td style="padding: 16px; font-weight: 600; color: #475569;">@formattedId</td>
+                            <td style="padding: 16px; font-weight: 600; color: #0f172a;">
+                                <a asp-action="ShowWarehouseDetails" asp-route-id="@item.WarehouseID" style="color: #0f172a; text-decoration: none;">@item.WarehouseName</a>
+                            </td>
+                            <td style="padding: 16px; color: #64748b;">@item.Location</td>
+                            <td style="padding: 16px; color: #64748b;">@item.Capacity.ToString("N0")</td>
+                            <td style="padding: 16px; color: #64748b;">@item.CurrentStock.ToString("N0")</td>
+                            <td style="padding: 16px;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="width: 60px; height: 6px; background-color: #e2e8f0; border-radius: 3px; overflow: hidden;">
+                                        <div style="width: @(itemUtil)%; height: 100%; background-color: @progressColor;"></div>
+                                    </div>
+                                    <span style="font-weight: 600; font-size: 0.85rem; color: #475569;">@itemUtil%</span>
+                                </div>
+                            </td>
+                            <td style="padding: 16px; text-align: right;">
+                                <a asp-action="Edit" asp-route-id="@item.WarehouseID" style="color: #10b981; margin-right: 12px; text-decoration: none;" title="Edit">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.WarehouseID" style="color: #ef4444; text-decoration: none;" title="Delete" onclick="return confirm('Are you sure you want to delete this warehouse?');">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" style="padding: 40px; text-align: center; color: #94a3b8;">
+                            <i class="fa-solid fa-warehouse" style="font-size: 2.5rem; margin-bottom: 16px; opacity: 0.5;"></i>
+                            <p style="font-size: 1.1rem; margin: 0;">No warehouses found. Click "Add Warehouse" to get started.</p>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

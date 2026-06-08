@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Logitrack_ERP.Models.Warehouse
+@{
     ViewData["Title"] = "Add New Warehouse";
 }
 
@@ -9,21 +10,21 @@
     </div>
 
     <div class="form-card-container">
-        <form class="figma-styled-form">
+        <form asp-action="Create" method="post" class="figma-styled-form">
             <div class="form-section">
                 <h3 class="section-subtitle"><i class="fa-solid fa-warehouse"></i> Warehouse Basic Info</h3>
                 <div class="form-grid-3">
                     <div class="input-group">
                         <label class="form-label">Warehouse Name</label>
-                        <input type="text" class="form-control-input" placeholder="e.g. Faisalabad Logistics Hub" required />
+                        <input type="text" name="WarehouseName" class="form-control-input" placeholder="e.g. Faisalabad Logistics Hub" required />
                     </div>
                     <div class="input-group">
                         <label class="form-label">Total Capacity (sq ft)</label>
-                        <input type="number" class="form-control-input" placeholder="e.g. 40000" required />
+                        <input type="number" name="Capacity" class="form-control-input" placeholder="e.g. 40000" min="0" required />
                     </div>
                     <div class="input-group">
                         <label class="form-label">Current Stock Occupied (sq ft)</label>
-                        <input type="number" class="form-control-input" placeholder="e.g. 10000" />
+                        <input type="number" name="CurrentStock" class="form-control-input" placeholder="e.g. 10000" min="0" />
                     </div>
                 </div>
             </div>
@@ -32,7 +33,7 @@
                 <h3 class="section-subtitle"><i class="fa-solid fa-map-pin"></i> Location Details</h3>
                 <div class="input-group full-width-input">
                     <label class="form-label">Warehouse Address</label>
-                    <textarea class="form-control-textarea" rows="3" placeholder="Enter complete physical address..."></textarea>
+                    <textarea name="Location" class="form-control-textarea" rows="3" placeholder="Enter complete physical address..." required></textarea>
                 </div>
             </div>
 
