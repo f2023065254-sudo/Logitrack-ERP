@@ -6,7 +6,7 @@ namespace Logitrack_ERP.Models
 {
     public class Customer_DAL
     {
-        // 1. CREATE (Standard)
+       
         public void AddCustomer(string conn, Customer cust)
         {
             string query = @"INSERT INTO CUSTOMER (Name, Email, Phone, Address) 
@@ -24,7 +24,7 @@ namespace Logitrack_ERP.Models
             }
         }
 
-        // 2. READ ALL
+        
         public List<Customer> GetAllCustomers(string conn)
         {
             List<Customer> list = new List<Customer>();
@@ -51,7 +51,7 @@ namespace Logitrack_ERP.Models
             return list;
         }
 
-        // 3. READ SINGLE
+        
         public Customer GetCustomerById(string conn, int id)
         {
             Customer cust = null;
@@ -79,7 +79,7 @@ namespace Logitrack_ERP.Models
             return cust;
         }
 
-        // 4. UPDATE
+        
         public void UpdateCustomer(string conn, Customer cust)
         {
             string query = @"UPDATE CUSTOMER 
@@ -99,8 +99,7 @@ namespace Logitrack_ERP.Models
             }
         }
 
-        // 5. DELETE
-        public void DeleteCustomer(string conn, int id)
+         public void DeleteCustomer(string conn, int id)
         {
             string query = "DELETE FROM CUSTOMER WHERE CustomerID = @id;";
             using (SqlConnection connection = new SqlConnection(conn))
@@ -112,25 +111,6 @@ namespace Logitrack_ERP.Models
             }
         }
 
-        // 6. QUICK ADD (For the modal workflow)
-        public int QuickAddCustomer(string conn, Customer cust)
-        {
-            int newId = 0;
-            string query = @"INSERT INTO CUSTOMER (Name, Email, Phone, Address) 
-                             OUTPUT INSERTED.CustomerID 
-                             VALUES (@name, @email, @phone, @address);";
-
-            using (SqlConnection connection = new SqlConnection(conn))
-            {
-                connection.Open();
-                SqlCommand cmd = new SqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@name", cust.Name);
-                cmd.Parameters.AddWithValue("@email", cust.Email);
-                cmd.Parameters.AddWithValue("@phone", cust.Phone);
-                cmd.Parameters.AddWithValue("@address", cust.Address);
-                newId = (int)cmd.ExecuteScalar();
-            }
-            return newId;
-        }
+        
     }
 }

@@ -11,14 +11,14 @@ namespace Logitrack_ERP.Controllers
         private Warehouse_DAL war_dal = new Warehouse_DAL();
         private IConfiguration config;
         private Inventory_DAL inv_dal = new Inventory_DAL();
-        // Constructor to grab connection string from appsettings.json
+        
         public WarehouseController(IConfiguration config)
         {
             this.config = config;
             conn = config.GetConnectionString("DefaultConnection");
         }
 
-        // --- INDEX (Read All) ---
+        
         [HttpGet]
         public IActionResult Index()
         {
@@ -26,7 +26,7 @@ namespace Logitrack_ERP.Controllers
             return View(war_dal.GetAllWarehouses(conn));
         }
 
-        // --- CREATE ---
+       
         [HttpGet]
         public IActionResult Create()
         {
@@ -40,7 +40,7 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- EDIT ---
+        
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -59,7 +59,7 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- DELETE ---
+        
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -67,7 +67,7 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- DETAILS ---
+       
         [HttpGet]
         public IActionResult ShowWarehouseDetails(int id)
         {
@@ -75,9 +75,9 @@ namespace Logitrack_ERP.Controllers
             return View(warehouse);
         }
 
-        // ==========================================
+      
         //             INVENTORY MANAGEMENT
-        // ==========================================
+        
         [HttpGet]
         public IActionResult Inventory()
         {
@@ -85,7 +85,7 @@ namespace Logitrack_ERP.Controllers
             return View(allInventory);
         }
 
-        // Changed to match your CreateInventory.cshtml file
+        
         [HttpGet]
         public IActionResult CreateInventory()
         {
@@ -99,7 +99,6 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Inventory");
         }
 
-        // Changed to match your EditInventory.cshtml file
         [HttpGet]
         public IActionResult EditInventory(int id)
         {

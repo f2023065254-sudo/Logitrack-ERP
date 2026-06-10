@@ -16,7 +16,6 @@ namespace Logitrack_ERP.Controllers
             conn = configuration.GetConnectionString("DefaultConnection");
         }
 
-        // --- READ ALL COMPLAINTS-- -
         [HttpGet]
         public IActionResult Index()
         {
@@ -24,7 +23,7 @@ namespace Logitrack_ERP.Controllers
             return View(allComplaints);
         }
 
-        // --- LOG NEW COMPLAINT ---
+        
         [HttpGet]
         public IActionResult Create()
         {
@@ -38,7 +37,7 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- EDIT COMPLAINT ---
+        
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -63,7 +62,7 @@ namespace Logitrack_ERP.Controllers
             return View(comp);
         }
 
-        // --- DELETE COMPLAINT ---
+       
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -72,9 +71,9 @@ namespace Logitrack_ERP.Controllers
         }
 
 
-        // ==========================================
+        
         //             RISK REPORTS
-        // ==========================================
+        
         [HttpGet]
         public IActionResult RiskReports()
         {

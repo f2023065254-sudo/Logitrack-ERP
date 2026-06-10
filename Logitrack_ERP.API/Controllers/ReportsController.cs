@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Logitrack_ERP.API.Models;
 
 namespace Logitrack_ERP.API.Controllers
 {
@@ -14,13 +15,13 @@ namespace Logitrack_ERP.API.Controllers
             connString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        // ==========================================
+        
         // API 1: LOW STOCK INVENTORY REPORT
-        // ==========================================
+        
         [HttpGet("low-stock")]
         public IActionResult GetLowStockReport()
         {
-            List<LowStockDTO> report = new List<LowStockDTO>();
+            List<LowStock> report = new List<LowStock>();
             string query = "SELECT ProductID, ProductName, StockQuantity, Unit FROM PRODUCT WHERE StockQuantity < 50;";
 
             using (SqlConnection connection = new SqlConnection(connString))
@@ -30,7 +31,7 @@ namespace Logitrack_ERP.API.Controllers
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    report.Add(new LowStockDTO
+                    report.Add(new LowStock
                     {
                         ProductID = Convert.ToInt32(reader["ProductID"]),
                         ProductName = reader["ProductName"].ToString(),
@@ -42,13 +43,13 @@ namespace Logitrack_ERP.API.Controllers
             return Ok(new { ReportName = "Low Stock Alert Report", TotalItems = report.Count, Data = report });
         }
 
-        // ==========================================
+        
         // API 2: ORDER REVENUE BY STATUS REPORT
-        // ==========================================
+        
         [HttpGet("revenue-summary")]
         public IActionResult GetRevenueSummaryReport()
         {
-            List<RevenueSummaryDTO> report = new List<RevenueSummaryDTO>();
+            List<RevenueSummary> report = new List<RevenueSummary>();
             string query = "SELECT Status, COUNT(OrderID) as TotalOrders, SUM(TotalAmount) as TotalRevenue FROM Orders GROUP BY Status;";
 
             using (SqlConnection connection = new SqlConnection(connString))
@@ -58,7 +59,7 @@ namespace Logitrack_ERP.API.Controllers
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    report.Add(new RevenueSummaryDTO
+                    report.Add(new RevenueSummary
                     {
                         OrderStatus = reader["Status"].ToString(),
                         TotalOrders = Convert.ToInt32(reader["TotalOrders"]),
@@ -69,13 +70,13 @@ namespace Logitrack_ERP.API.Controllers
             return Ok(new { ReportName = "Revenue Summary by Order Status", Data = report });
         }
 
-        // ==========================================
+        
         // API 3: FLEET STATUS REPORT
-        // ==========================================
+        
         [HttpGet("fleet-status")]
         public IActionResult GetFleetStatusReport()
         {
-            List<FleetStatusDTO> report = new List<FleetStatusDTO>();
+            List<FleetStatus> report = new List<FleetStatus>();
             string query = "SELECT Status, COUNT(VehicleID) as VehicleCount FROM VEHICLE GROUP BY Status;";
 
             using (SqlConnection connection = new SqlConnection(connString))
@@ -85,7 +86,7 @@ namespace Logitrack_ERP.API.Controllers
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    report.Add(new FleetStatusDTO
+                    report.Add(new FleetStatus
                     {
                         VehicleStatus = reader["Status"].ToString(),
                         TotalVehicles = Convert.ToInt32(reader["VehicleCount"])
@@ -95,13 +96,13 @@ namespace Logitrack_ERP.API.Controllers
             return Ok(new { ReportName = "Fleet Status Distribution Report", Data = report });
         }
 
-        // ==========================================
+       
         // API 4: EMPLOYEE HEADCOUNT BY DEPARTMENT
-        // ==========================================
+        
         [HttpGet("employee-headcount")]
         public IActionResult GetEmployeeHeadcountReport()
         {
-            List<DepartmentHeadcountDTO> report = new List<DepartmentHeadcountDTO>();
+            List<DepartmentHead> report = new List<DepartmentHead>();
             string query = "SELECT Department, COUNT(EmployeeID) as EmployeeCount FROM EMPLOYEE GROUP BY Department;";
 
             using (SqlConnection connection = new SqlConnection(connString))
@@ -111,7 +112,7 @@ namespace Logitrack_ERP.API.Controllers
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    report.Add(new DepartmentHeadcountDTO
+                    report.Add(new DepartmentHead
                     {
                         DepartmentName = reader["Department"].ToString(),
                         TotalEmployees = Convert.ToInt32(reader["EmployeeCount"])
@@ -121,14 +122,14 @@ namespace Logitrack_ERP.API.Controllers
             return Ok(new { ReportName = "Department Headcount Report", Data = report });
         }
 
-        // ==========================================
+        
         // API 5: CRITICAL RISKS REPORT
-        // ==========================================
+   
         [HttpGet("critical-risks")]
         public IActionResult GetCriticalRisksReport()
         {
-            List<CriticalRiskDTO> report = new List<CriticalRiskDTO>();
-            // Adjust table name/columns if your Risk table differs slightly
+            List<CriticalRisk> report = new List<CriticalRisk>();
+            
             string query = "SELECT RiskType, Description, ReportedDate, Status FROM RISK WHERE Severity = 'Critical' AND Status != 'Resolved';";
 
             using (SqlConnection connection = new SqlConnection(connString))
@@ -138,7 +139,7 @@ namespace Logitrack_ERP.API.Controllers
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    report.Add(new CriticalRiskDTO
+                    report.Add(new CriticalRisk
                     {
                         RiskType = reader["RiskType"].ToString(),
                         Description = reader["Description"].ToString(),
@@ -151,41 +152,11 @@ namespace Logitrack_ERP.API.Controllers
         }
     }
 
-    // ==========================================
-    // DATA TRANSFER OBJECTS (DTOs) FOR THE APIs
-    // ==========================================
-    public class LowStockDTO
-    {
-        public int ProductID { get; set; }
-        public string ProductName { get; set; }
-        public int StockQuantity { get; set; }
-        public string Unit { get; set; }
-    }
+    
+  
+   
 
-    public class RevenueSummaryDTO
-    {
-        public string OrderStatus { get; set; }
-        public int TotalOrders { get; set; }
-        public decimal TotalRevenue { get; set; }
-    }
+ 
 
-    public class FleetStatusDTO
-    {
-        public string VehicleStatus { get; set; }
-        public int TotalVehicles { get; set; }
-    }
-
-    public class DepartmentHeadcountDTO
-    {
-        public string DepartmentName { get; set; }
-        public int TotalEmployees { get; set; }
-    }
-
-    public class CriticalRiskDTO
-    {
-        public string RiskType { get; set; }
-        public string Description { get; set; }
-        public string ReportedDate { get; set; }
-        public string MitigationStatus { get; set; }
-    }
+   
 }

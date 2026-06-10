@@ -10,16 +10,16 @@ namespace Logitrack_ERP.Controllers
     {
         private readonly string conn;
         private Vehicle_DAL vehicle_dal = new Vehicle_DAL();
-        private Driver_DAL driver_dal = new Driver_DAL(); // Added Driver DAL
+        private Driver_DAL driver_dal = new Driver_DAL(); 
         private Route_DAL route_dal = new Route_DAL();
         public FleetController(IConfiguration configuration)
         {
             conn = configuration.GetConnectionString("DefaultConnection");
         }
 
-        // ==========================================
+        
         //             VEHICLE MANAGEMENT
-        // ==========================================
+        
         [HttpGet]
         public IActionResult Index()
         {
@@ -59,9 +59,9 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Index");
         }
 
-        // ==========================================
+        
         //             DRIVER MANAGEMENT
-        // ==========================================
+      
         [HttpGet]
         public IActionResult Drivers()
         {
@@ -76,7 +76,7 @@ namespace Logitrack_ERP.Controllers
         public IActionResult CreateDriver(Driver driver)
         {
             driver_dal.AddDriver(conn, driver);
-            return RedirectToAction("Drivers"); // Redirects to Drivers tab
+            return RedirectToAction("Drivers"); 
         }
 
         [HttpGet]
@@ -101,9 +101,9 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Drivers");
         }
 
-        // ==========================================
+        
         //             ROUTE MANAGEMENT
-        // ==========================================
+        
         [HttpGet]
         public IActionResult Routes()
         {
@@ -118,7 +118,7 @@ namespace Logitrack_ERP.Controllers
         public IActionResult CreateRoute(Route route)
         {
             route_dal.AddRoute(conn, route);
-            return RedirectToAction("Routes"); // Redirects to the Routes dashboard
+            return RedirectToAction("Routes"); 
         }
 
         [HttpGet]

@@ -9,7 +9,7 @@
         public string Status { get; set; }
         public string CreatedDate { get; set; }
 
-        // Joined Display Fields
+        
         public string CustomerName { get; set; }
     }
 }

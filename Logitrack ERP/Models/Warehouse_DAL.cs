@@ -29,7 +29,7 @@ namespace Logitrack_ERP.Models
             }
         }
 
-        // 2. READ ALL WAREHOUSES (For the Index page)
+       
         public List<Warehouse> GetAllWarehouses(string conn)
         {
             List<Warehouse> warehouses = new List<Warehouse>();
@@ -56,7 +56,7 @@ namespace Logitrack_ERP.Models
             return warehouses;
         }
 
-        // 3. READ SINGLE WAREHOUSE (For the Edit/Details page)
+     
         public Warehouse GetWarehouseById(string conn, int id)
         {
             Warehouse warehouse = null;
@@ -108,7 +108,7 @@ namespace Logitrack_ERP.Models
             }
         }
 
-        // 5. DELETE WAREHOUSE (With the "FROM" typo fixed!)
+  
         public void deletewarehouse(string conn, int id)
         {
             string query = "DELETE FROM WAREHOUSE WHERE WarehouseID = @id;";

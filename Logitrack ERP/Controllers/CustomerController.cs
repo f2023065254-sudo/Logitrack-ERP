@@ -15,7 +15,7 @@ namespace Logitrack_ERP.Controllers
             conn = configuration.GetConnectionString("DefaultConnection");
         }
 
-        // --- STANDARD CRUD ROUTES ---
+        
         [HttpGet]
         public IActionResult Index()
         {
