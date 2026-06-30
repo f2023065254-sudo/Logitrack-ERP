@@ -1,0 +1,49 @@
+﻿@model Logitrack_ERP.Models.ReportApiResponse<Logitrack_ERP.Models.CriticalRiskItem>
+@{
+    ViewData["Title"] = "Critical Risks";
+}
+
+<div class="warehouse-management-wrapper" style="padding: 24px; background-color: #f8fafc; min-height: 100vh;">
+    @* ERROR BLOCK *@
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div style="background-color: #fee2e2; color: #991b1b; padding: 16px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f87171;">
+            <h3 style="margin-top:0;">API Connection Failed</h3>
+            <p>@ViewBag.ErrorMessage</p>
+        </div>
+    }
+    @if (Model != null)
+    {
+        <div class="module-header" style="margin-bottom: 24px;">
+            <span style="background-color: #fee2e2; color: #ef4444; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 12px; display: inline-block;">URGENT API DATA</span>
+            <h2 class="module-title" style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">@Model.ReportName</h2>
+            <p style="color: #64748b; margin: 0;">Total Unresolved Critical Risks: <strong>@Model.TotalItems</strong></p>
+        </div>
+
+        <div class="table-container" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-transform: uppercase; font-size: 0.75rem;">
+                    <tr>
+                        <th style="padding: 16px;">Risk Type</th>
+                        <th style="padding: 16px;">Description</th>
+                        <th style="padding: 16px;">Reported Date</th>
+                        <th style="padding: 16px;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Data)
+                    {
+                        <tr style="border-bottom: 1px solid #f1f5f9;">
+                            <td style="padding: 16px; font-weight: 600; color: #0f172a;">@item.RiskType</td>
+                            <td style="padding: 16px; color: #64748b;">@item.Description</td>
+                            <td style="padding: 16px; color: #64748b;">@item.ReportedDate</td>
+                            <td style="padding: 16px;">
+                                <span style="background: #fee2e2; color: #b91c1c; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">@item.MitigationStatus</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
