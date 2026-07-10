@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    // Session se user information aur Role read karein
+    var userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+    var userEmail = HttpContextAccessor.HttpContext.Session.GetString("UserEmail");
+    var userRole = HttpContextAccessor.HttpContext.Session.GetString("Role");
+
+    // Active controller ka naam check karne ke liye helper string
+    var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,73 +21,141 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
 
     <div class="dashboard-container">
 
-        <aside class="sidebar">
-            <div class="sidebar-top">
-                <div class="logo-area">
-                    
-                    <span class="logo-text">Logitrack ERP</span>
+        @if (userEmail != null)
+        {
+            <aside class="sidebar">
+                <div class="sidebar-top">
+                    <div class="logo-area">
+                        <span class="logo-text">Logitrack ERP</span>
+                    </div>
+
+                    <nav class="nav-menu">
+
+                        @if (userRole == "Owner")
+                        {
+                            <a asp-controller="Dashboard" asp-action="OwnerDashboard" class="nav-item @(currentController == "Dashboard" ? "active" : "")">
+                                <i class="fa-solid fa-chart-pie"></i> Dashboard
+                            </a>
+                            <a asp-controller="Customer" asp-action="Index" class="nav-item @(currentController == "Customer" ? "active" : "")">
+                                <i class="fa-solid fa-users"></i> Customers
+                            </a>
+                            <a asp-controller="Product" asp-action="Index" class="nav-item @(currentController == "Product" ? "active" : "")">
+                                <i class="fa-solid fa-tags"></i> Product
+                            </a>
+                            <a asp-controller="Orders" asp-action="Index" class="nav-item @(currentController == "Orders" ? "active" : "")">
+                                <i class="fa-solid fa-box"></i> Order Management
+                            </a>
+                            <a asp-controller="Warehouse" asp-action="Index" class="nav-item @(currentController == "Warehouse" ? "active" : "")">
+                                <i class="fa-solid fa-warehouse"></i> Warehouse
+                            </a>
+                            <a asp-controller="Fleet" asp-action="Index" class="nav-item @(currentController == "Fleet" ? "active" : "")">
+                                <i class="fa-solid fa-route"></i> Fleet & Routes
+                            </a>
+                            <a asp-controller="Finance" asp-action="Index" class="nav-item @(currentController == "Finance" ? "active" : "")">
+                                <i class="fa-solid fa-dollar-sign"></i> Finance & Billing
+                            </a>
+                            <a asp-controller="HRM" asp-action="Index" class="nav-item @(currentController == "HRM" ? "active" : "")">
+                                <i class="fa-solid fa-users"></i> HRM & Payroll
+                            </a>
+                            <a asp-controller="Risk" asp-action="Index" class="nav-item @(currentController == "Risk" ? "active" : "")">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Risk & Complaints
+                            </a>
+                            <a asp-controller="Reports" asp-action="Index" class="nav-item @(currentController == "Reports" ? "active" : "")">
+                                <i class="fa-solid fa-chart-line"></i> Reports & Analytics
+                            </a>
+                        }
+                        else if (userRole == "Manager")
+                        {
+                            <a asp-controller="Dashboard" asp-action="ManagerDashboard" class="nav-item @(currentController == "Dashboard" ? "active" : "")">
+                                <i class="fa-solid fa-chart-pie"></i> Manager Dashboard
+                            </a>
+                            <a asp-controller="Customer" asp-action="Index" class="nav-item @(currentController == "Customer" ? "active" : "")">
+                                <i class="fa-solid fa-users"></i> Customers
+                            </a>
+                            <a asp-controller="Product" asp-action="Index" class="nav-item @(currentController == "Product" ? "active" : "")">
+                                <i class="fa-solid fa-tags"></i> Product
+                            </a>
+                            <a asp-controller="Orders" asp-action="Index" class="nav-item @(currentController == "Orders" ? "active" : "")">
+                                <i class="fa-solid fa-box"></i> Order Management
+                            </a>
+                            <a asp-controller="Warehouse" asp-action="Index" class="nav-item @(currentController == "Warehouse" ? "active" : "")">
+                                <i class="fa-solid fa-warehouse"></i> Warehouse
+                            </a>
+                            <a asp-controller="Fleet" asp-action="Index" class="nav-item @(currentController == "Fleet" ? "active" : "")">
+                                <i class="fa-solid fa-route"></i> Fleet & Routes
+                            </a>
+
+                            <a href="@Url.Action("MarkAttendance", "HRM")" class="nav-item nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "HRM" ? "active" : "")" style="display: flex; align-items: center; padding: 12px 20px; color: white; text-decoration: none; margin-bottom: 5px; border-radius: 6px;">
+                                <i class="fa-solid fa-users" style="width: 25px;"></i>
+                                <span style="margin-left: 10px;">HRM & Attendance</span>
+                            </a>
+                        }
+                        else if (userRole == "Employee")
+                        {
+                            <a asp-controller="Dashboard" asp-action="EmployeeDashboard" class="nav-item @(currentController == "Dashboard" ? "active" : "")">
+                                <i class="fa-solid fa-chart-pie"></i> My Workspace
+                            </a>
+                            <a asp-controller="Customer" asp-action="Index" class="nav-item @(currentController == "Customer" ? "active" : "")">
+                                <i class="fa-solid fa-users"></i> Customers List
+                            </a>
+                            <a asp-controller="Product" asp-action="Index" class="nav-item @(currentController == "Product" ? "active" : "")">
+                                <i class="fa-solid fa-tags"></i> Add Products
+                            </a>
+                            <a asp-controller="Warehouse" asp-action="Index" class="nav-item @(currentController == "Warehouse" ? "active" : "")">
+                                <i class="fa-solid fa-warehouse"></i> Check Inventory
+                            </a>
+                        }
+                        else if (userRole == "Customer")
+                        {
+                            <a asp-controller="Dashboard" asp-action="CustomerDashboard" class="nav-item @(currentController == "Dashboard" ? "active" : "")">
+                                <i class="fa-solid fa-chart-pie"></i> My Portal
+                            </a>
+                            <a asp-controller="Product" asp-action="Index" class="nav-item @(currentController == "Product" ? "active" : "")">
+                                <i class="fa-solid fa-tags"></i> View Products
+                            </a>
+                            <a asp-controller="Orders" asp-action="Index" class="nav-item @(currentController == "Orders" ? "active" : "")">
+                                <i class="fa-solid fa-box"></i> My Orders
+                            </a>
+                            <a asp-controller="Risk" asp-action="Create" class="nav-item @(currentController == "Risk" ? "active" : "")">
+                                <i class="fa-solid fa-headset"></i> Support & Complaints
+                            </a>
+                        }
+                        else if (userRole == "Driver")
+                        {
+                            <a asp-controller="Dashboard" asp-action="DriverDashboard" class="nav-item @(currentController == "Dashboard" ? "active" : "")">
+                                <i class="fa-solid fa-chart-pie"></i> Driver Logs
+                            </a>
+                            <a asp-controller="Fleet" asp-action="Index" class="nav-item @(currentController == "Fleet" ? "active" : "")">
+                                <i class="fa-solid fa-route"></i> Assigned Routes
+                            </a>
+                        }
+                    </nav>
                 </div>
 
-                <nav class="nav-menu">
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")">
-                        <i class="fa-solid fa-chart-pie"></i> Dashboard
+                <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="profile-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="profile-info">
+                            <p class="profile-email" style="font-weight: 600;">@userName</p>
+                            <p class="profile-email" style="font-size: 11px; color: #94a3b8;">@userEmail (@userRole)</p>
+                        </div>
+                    </div>
+                    <a asp-controller="Account" asp-action="Logout" style="width: 100%; text-align: center; background-color: #ef4444; color: white; padding: 8px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 500; margin-top: 5px;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </a>
-
-                    <a asp-controller="Customer" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Customer" ? "active" : "")">
-                        <i class="fa-solid fa-users"></i> Customers
-                    </a>
-                    <a asp-controller="Product" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Product" ? "active" : "")">
-                        <i class="fa-solid fa-tags"></i> Product 
-                    </a>
-
-                    <a asp-area="" asp-controller="Orders" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Orders" ? "active" : "")">
-                        <i class="fa-solid fa-box"></i> Order Management
-                    </a>
-
-                    <a asp-area="" asp-controller="Warehouse" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Warehouse" ? "active" : "")">
-                        <i class="fa-solid fa-warehouse"></i> Warehouse
-                    </a>
-
-                    <a asp-area="" asp-controller="Fleet" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Fleet" ? "active" : "")">
-                        <i class="fa-solid fa-route"></i> Fleet & Routes
-                    </a>
-
-                    <a asp-area="" asp-controller="Finance" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Finance" ? "active" : "")">
-                        <i class="fa-solid fa-dollar-sign"></i> Finance & Billing
-                    </a>
-
-                    <a asp-area="" asp-controller="HRM" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "HRM" ? "active" : "")">
-                        <i class="fa-solid fa-users"></i> HRM & Payroll
-                    </a>
-
-                    <a asp-area="" asp-controller="Risk" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Complaints" ? "active" : "")">
-                        <i class="fa-solid fa-triangle-exclamation"></i> Risk & Complaints
-                    </a>
-
-                    <a asp-area="" asp-controller="Reports" asp-action="Index" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Reports" ? "active" : "")">
-                        <i class="fa-solid fa-chart-line"></i> Reports & Analytics
-                    </a>
-                </nav>
-            </div>
-
-            <div class="sidebar-footer">
-                <div class="profile-icon">
-                    <i class="fa-solid fa-user"></i>
                 </div>
-                <div class="profile-info">
-                    <p class="profile-email">admin@logicore.com</p>
-                </div>
-            </div>
-        </aside>
+            </aside>
+        }
 
-        <main class="main-content">
+        <main class="main-content" style="@(userEmail == null ? "width: 100%; margin-left: 0; padding: 20px;" : "")">
             @RenderBody()
         </main>
 

@@ -9,6 +9,8 @@
     int activeVehicles = Model != null ? Model.Count(v => v.Status == "On Route") : 0;
 }
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
 <div class="warehouse-management-wrapper" style="padding: 24px; background-color: #f8fafc; min-height: 100vh;">
 
     <div class="module-header" style="margin-bottom: 24px;">
@@ -33,6 +35,13 @@
             <p style="color: #64748b; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px;">In Maintenance</p>
             <h3 style="color: #ef4444; font-size: 1.8rem; font-weight: 700; margin: 0;">@maintenanceVehicles</h3>
         </div>
+    </div>
+
+    <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 32px;">
+        <h3 style="margin-top: 0; color: #1e293b; font-size: 1.1rem; margin-bottom: 15px;">
+            <i class="fa-solid fa-map-location-dot" style="color: #2563eb; margin-right: 8px;"></i> Live Operations Master Map
+        </h3>
+        <div id="fleetMap" style="height: 450px; border-radius: 8px; z-index: 1;"></div>
     </div>
 
     <div class="tabs-container" style="border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; display: flex; gap: 24px;">
@@ -78,12 +87,10 @@
                                 }
                                 else if (item.Status == "On Route")
                                 {
-
                                     <span style="background: #dbeafe; color: #1e40af; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">On Route</span>
                                 }
                                 else
                                 {
-
                                     <span style="background: #fee2e2; color: #991b1b; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">Maintenance</span>
                                 }
                             </td>
@@ -98,3 +105,146 @@
         </table>
     </div>
 </div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var map = L.map('fleetMap').setView([30.3753, 69.3451], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // 🚛 ICONS
+    var truckIcon = L.icon({
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/751/751141.png',
+    iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -15]
+    });
+
+    var warehouseIcon = L.icon({
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/2830/2830312.png',
+    iconSize: [35, 35], iconAnchor: [17, 35], popupAnchor: [0, -35]
+    });
+
+    // 🧠 SMART DICTIONARY
+    var cityCoordinates = {
+    "lahore": [31.5204, 74.3587], "islamabad": [33.6844, 73.0479],
+    "karachi": [24.8607, 67.0011], "krachi": [24.8607, 67.0011],
+    "peshawar": [34.0151, 71.5249], "quetta": [30.1798, 66.9750],
+    "multan": [30.1968, 71.4697], "faisalabad": [31.4504, 73.1350],
+    "gujranwala": [32.1617, 74.1883], "sialkot": [32.4925, 74.5310]
+    };
+
+    // 🟢 ADVANCED SEARCH (Partial Matching)
+    // Agar "Lahore, Johar Town" likha hoga to ye usme se "lahore" dhoond kar location nikal lega
+    function getCoords(cityName) {
+    if(!cityName || cityName === '') return null;
+    var cleanName = String(cityName).toLowerCase().trim();
+
+    // 1. Pehle exact match check karega
+    if(cityCoordinates[cleanName]) return cityCoordinates[cleanName];
+
+    // 2. Phir string ke andar match dhoondega
+    for(var key in cityCoordinates) {
+    if(cleanName.includes(key)) {
+    return cityCoordinates[key];
+    }
+    }
+    return null;
+    }
+
+    // LAYERS
+    var routeLayer = L.featureGroup().addTo(map);
+    var vehicleLayer = L.featureGroup().addTo(map);
+    var warehouseLayer = L.featureGroup().addTo(map);
+
+    var bounds = [];
+
+    // ==========================================
+    // 1. LIVE ROUTES
+    // ==========================================
+    @if (ViewBag.ActiveRoutes != null)
+    {
+        foreach (var route in ViewBag.ActiveRoutes)
+        {
+            <text>
+                try {
+                var originCoords = getCoords('@route.StartLocation');
+                var destCoords = getCoords('@route.Destination');
+
+                if(originCoords && destCoords) {
+                L.marker(originCoords).bindPopup("<b>Origin:</b> @route.StartLocation").addTo(routeLayer);
+                L.marker(destCoords).bindPopup("<b>Destination:</b> @route.Destination").addTo(routeLayer);
+
+                L.polyline([originCoords, destCoords], {color: '#3b82f6', weight: 4, opacity: 0.8}).addTo(routeLayer);
+                bounds.push(originCoords, destCoords);
+                }
+                } catch(e) { }
+            </text>
+        }
+    }
+
+    // ==========================================
+    // 2. LIVE WAREHOUSES (Directly from Database!)
+    // ==========================================
+    @if (ViewBag.AllWarehouses != null)
+    {
+        foreach (var wh in ViewBag.AllWarehouses)
+        {
+            <text>
+                try {
+                // Aapke Warehouse model mein "Location" ya us se milti julti property yahan likhein
+                var whCoords = getCoords('@wh.Location');
+
+                if(whCoords) {
+                // Thora sa offset taake route start aur warehouse ek doosre ke upar overlap na hon
+                var offsetWh = [whCoords[0] + 0.01, whCoords[1] + 0.01];
+
+                L.marker(offsetWh, {icon: warehouseIcon})
+                .bindPopup("<strong style='color:#ea580c;'>Warehouse:</strong> @wh.WarehouseName <br> <small>Capacity: @wh.Capacity</small>")
+                .addTo(warehouseLayer);
+
+                bounds.push(offsetWh);
+                }
+                } catch(e) { }
+            </text>
+        }
+    }
+
+    // ==========================================
+    // 3. LIVE VEHICLES
+    // ==========================================
+    @if (Model != null)
+    {
+        foreach (var vehicle in Model)
+        {
+            if (vehicle.Status == "On Route")
+            {
+                <text>
+                    try {
+                    var truckLoc = getCoords("lahore");
+                    if(truckLoc) {
+                    var offsetLoc = [truckLoc[0] + (Math.random() * 0.08 - 0.04), truckLoc[1] + (Math.random() * 0.08 - 0.04)];
+                    L.marker(offsetLoc, {icon: truckIcon})
+                    .bindPopup("<b>Truck: @vehicle.VehicleNumber</b><br>Driver: @vehicle.CurrentDriver<br><span style='color:green;'>Status: On Route</span>")
+                    .addTo(vehicleLayer);
+                    }
+                    } catch(e) {}
+                </text>
+            }
+        }
+    }
+
+    var overlays = {
+    "🛣️ Active Routes": routeLayer,
+    "🏢 Warehouses": warehouseLayer,
+    "🚛 Live Vehicles": vehicleLayer
+    };
+
+    L.control.layers(null, overlays, {collapsed: false}).addTo(map);
+
+    if(bounds.length > 0) {
+    map.fitBounds(bounds);
+    }
+    });
+</script>

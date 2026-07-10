@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "_Layout"; ViewData["Title"] = "Customer Dashboard";
+}
+<div style="font-family: 'Inter', sans-serif; padding: 20px;">
+    <h1 style="color: #0f172a; font-weight: 700;">My Logistics Portal</h1>
+    <p style="color: #64748b; margin-bottom: 30px;">Track your shipments, view your history, and manage your account.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-top: 4px solid #2563eb;">
+            <h3 style="margin-top: 0; color: #1e293b; font-size: 1.25rem;">Shipment Summary</h3>
+
+            <div style="margin: 20px 0; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0;">
+                <span style="color: #64748b; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em;">Current Status</span>
+                <p style="font-size: 1.125rem; font-weight: 600; color: #0f172a; margin-top: 5px;">
+                    <i class="fa-solid fa-box-open" style="color: #2563eb; margin-right: 8px;"></i> @ViewBag.MyOrders
+                </p>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <span style="color: #64748b; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em;">Billing (Invoiced)</span>
+                <p style="font-size: 1.125rem; font-weight: 600; color: #0f172a; margin-top: 5px;">
+                    <i class="fa-solid fa-file-invoice-dollar" style="color: #10b981; margin-right: 8px;"></i> @ViewBag.TotalSpent
+                </p>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 25px;">
+                <a asp-controller="Orders" asp-action="Index" style="flex: 1; text-align: center; background: #2563eb; color: white; padding: 10px 15px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: background 0.2s;">
+                    View My Orders
+                </a>
+                <a asp-controller="Risk" asp-action="Create" style="flex: 1; text-align: center; background: white; color: #ef4444; border: 1px solid #ef4444; padding: 10px 15px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.2s;">
+                    Log a Complaint
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

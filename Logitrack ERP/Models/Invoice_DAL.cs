@@ -7,24 +7,38 @@ namespace Logitrack_ERP.Models
     public class Invoice_DAL
     {
         // 1. CREATE
-        public void AddInvoice(string conn, Invoice invoice)
+        public void CreateOrder(Order order, string? conn)
         {
-            string query = @"INSERT INTO INVOICE 
-                             (OrderID, CustomerID, InvoiceDate, TotalAmount, DueDate, Status)
-                             VALUES 
-                             (@order, @customer, @invDate, @amount, @dueDate, @status);";
+            // Ek hi query block mein hum Order bhi banayenge aur uski Automatic Invoice bhi!
+            string query = @"
+                -- 1. Pehle Naya Order Insert Karein
+                INSERT INTO Orders 
+                (CustomerID, OrderDate, Status, TotalAmount, DeliveryAddress, CustomerName, ContactNo) 
+                VALUES 
+                (@CustomerID, @OrderDate, @Status, @TotalAmount, @DeliveryAddress, (SELECT Name FROM CUSTOMER WHERE CustomerID = @CustomerID), @ContactNo);
+
+                -- 2. Naye Ban'ne Walay Order ka 'OrderID' Get Karein
+                DECLARE @NewOrderID INT = SCOPE_IDENTITY();
+
+                -- 3. Usi OrderID ki madad se AUTOMATIC INVOICE banayein
+                -- Note: Due Date by default Order Date se 7 din aagay (DATEADD) ki set ki gayi hai
+                INSERT INTO INVOICE 
+                (OrderID, CustomerID, InvoiceDate, TotalAmount, DueDate, Status)
+                VALUES 
+                (@NewOrderID, @CustomerID, GETDATE(), @TotalAmount, DATEADD(day, 7, @OrderDate), 'Unpaid');
+            ";
 
             using (SqlConnection connection = new SqlConnection(conn))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@order", invoice.OrderID);
-                cmd.Parameters.AddWithValue("@customer", invoice.CustomerID);
-                // If InvoiceDate is null, use today's date
-                cmd.Parameters.AddWithValue("@invDate", string.IsNullOrEmpty(invoice.InvoiceDate) ? DateTime.Now.ToString("yyyy-MM-dd") : invoice.InvoiceDate);
-                cmd.Parameters.AddWithValue("@amount", invoice.TotalAmount);
-                cmd.Parameters.AddWithValue("@dueDate", invoice.DueDate);
-                cmd.Parameters.AddWithValue("@status", invoice.Status ?? "Unpaid");
+
+                cmd.Parameters.AddWithValue("@CustomerID", order.CustomerID);
+                cmd.Parameters.AddWithValue("@OrderDate", order.OrderDate);
+                cmd.Parameters.AddWithValue("@ContactNo", order.ContactNo);
+                cmd.Parameters.AddWithValue("@Status", order.Status.ToString());
+                cmd.Parameters.AddWithValue("@TotalAmount", order.TotalAmount);
+                cmd.Parameters.AddWithValue("@DeliveryAddress", order.DeliveryAddress);
 
                 cmd.ExecuteNonQuery();
             }

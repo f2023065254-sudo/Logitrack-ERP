@@ -2,6 +2,12 @@
 @{
     ViewData["Title"] = "Order Management";
 }
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" style="margin: 20px 24px 0 24px; padding: 15px; background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; border-radius: 6px;">
+        @TempData["ErrorMessage"]
+    </div>
+}
 
 <div class="orders-management-wrapper" style="padding: 24px; background-color: #f8fafc; min-height: 100vh;">
     <div class="module-header" style="margin-bottom: 24px;">

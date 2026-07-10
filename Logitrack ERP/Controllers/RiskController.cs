@@ -2,10 +2,13 @@
 using Logitrack_ERP.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using Logitrack_ERP.Filters; // <-- 1. Security Filter yahan add kiya hai
 
 namespace Logitrack_ERP.Controllers
 {
-    public class RiskController : Controller
+    // <-- 2. Lock yahan lagaya hai (Owner, Manager aur Customer ke liye) -->
+    [RoleAccess("Owner", "Manager", "Customer")]
+    public class RiskController : BaseController
     {
         private readonly string conn;
         private Complaint_DAL comp_dal = new Complaint_DAL();
@@ -23,7 +26,7 @@ namespace Logitrack_ERP.Controllers
             return View(allComplaints);
         }
 
-        
+
         [HttpGet]
         public IActionResult Create()
         {
@@ -37,7 +40,7 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Index");
         }
 
-        
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -62,7 +65,7 @@ namespace Logitrack_ERP.Controllers
             return View(comp);
         }
 
-       
+
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -71,9 +74,11 @@ namespace Logitrack_ERP.Controllers
         }
 
 
-        
+
+        // ===============================================
         //             RISK REPORTS
-        
+        // ===============================================
+
         [HttpGet]
         public IActionResult RiskReports()
         {

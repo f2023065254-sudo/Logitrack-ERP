@@ -6,18 +6,33 @@ namespace Logitrack_ERP.Models
 {
     public class Employee_DAL
     {
-        // 1. CREATE
+        // 1. CREATE (With Auto-Payroll Generation)
         public void AddEmployee(string conn, Employee emp)
         {
-            string query = @"INSERT INTO EMPLOYEE 
-                             (EmployeeName, Department, Position, Phone, Email, HireDate, Status)
-                             VALUES 
-                             (@name, @dept, @position, @phone, @email, @hireDate, @status);";
+            // Ek hi query mein Employee bhi insert hoga aur uski Default Payroll bhi ban jayegi
+            string query = @"
+                -- 1. Pehle Naya Employee Insert Karein
+                INSERT INTO EMPLOYEE 
+                (EmployeeName, Department, Position, Phone, Email, HireDate, Status)
+                VALUES 
+                (@name, @dept, @position, @phone, @email, @hireDate, @status);
+
+                -- 2. Naye Ban'ne Walay Employee ka 'EmployeeID' Get Karein
+                DECLARE @NewEmployeeID INT = SCOPE_IDENTITY();
+
+                -- 3. Usi EmployeeID ki madad se AUTOMATIC PAYROLL banayein
+                -- Default Salary 0.00 rakhi hai, jise HR baad mein update kar sakta hai
+                INSERT INTO PAYROLL 
+                (EmployeeID, SalaryAmount, Bonus, Deduction, NetSalary, PayrollDate, Status)
+                VALUES 
+                (@NewEmployeeID, 0.00, 0.00, 0.00, 0.00, GETDATE(), 'Pending');
+            ";
 
             using (SqlConnection connection = new SqlConnection(conn))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
+
                 cmd.Parameters.AddWithValue("@name", emp.EmployeeName);
                 cmd.Parameters.AddWithValue("@dept", emp.Department);
                 cmd.Parameters.AddWithValue("@position", emp.Position);

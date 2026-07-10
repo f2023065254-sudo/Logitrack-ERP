@@ -1,29 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Logitrack_ERP.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using Route = Logitrack_ERP.Models.Route;
+using Logitrack_ERP.Filters;
 
 namespace Logitrack_ERP.Controllers
 {
-    public class FleetController : Controller
+    [RoleAccess("Owner", "Manager", "Driver")]
+    public class FleetController : BaseController
     {
         private readonly string conn;
         private Vehicle_DAL vehicle_dal = new Vehicle_DAL();
-        private Driver_DAL driver_dal = new Driver_DAL(); 
+        private Driver_DAL driver_dal = new Driver_DAL();
         private Route_DAL route_dal = new Route_DAL();
+        private Warehouse_DAL warehouse_dal = new Warehouse_DAL(); // Warehouse DAL add kar diya
+
+        // Constructor hamesha variables ke foran baad aur methods se pehle aata hai
         public FleetController(IConfiguration configuration)
         {
             conn = configuration.GetConnectionString("DefaultConnection");
         }
 
-        
-        //             VEHICLE MANAGEMENT
-        
+        // ===============================================
+        //             VEHICLE MANAGEMENT (Index)
+        // ===============================================
+
         [HttpGet]
         public IActionResult Index()
         {
-            List<Vehicle> allVehicles = vehicle_dal.GetAllVehicles(conn);
+            List<Vehicle> allVehicles = vehicle_dal.GetAllVehicles(conn) ?? new List<Vehicle>();
+
+            // Map ke liye Routes aur Warehouses ViewBag mein bhej rahe hain
+            ViewBag.ActiveRoutes = route_dal.GetAllRoutes(conn) ?? new List<Route>();
+            ViewBag.AllWarehouses = warehouse_dal.GetAllWarehouses(conn) ?? new List<Warehouse>();
+
             return View(allVehicles);
         }
 
@@ -59,9 +71,10 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Index");
         }
 
-        
+        // ===============================================
         //             DRIVER MANAGEMENT
-      
+        // ===============================================
+
         [HttpGet]
         public IActionResult Drivers()
         {
@@ -70,21 +83,18 @@ namespace Logitrack_ERP.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateDriver() { return View(); }
+        public IActionResult CreateDriver()
+        {
+            List<Vehicle> vehicles = vehicle_dal.GetAllVehicles(conn);
+            ViewBag.VehicleList = new SelectList(vehicles, "VehicleNumber", "VehicleNumber");
+            return View();
+        }
 
         [HttpPost]
         public IActionResult CreateDriver(Driver driver)
         {
             driver_dal.AddDriver(conn, driver);
-            return RedirectToAction("Drivers"); 
-        }
-
-        [HttpGet]
-        public IActionResult EditDriver(int id)
-        {
-            Driver driver = driver_dal.GetDriverById(conn, id);
-            if (driver == null) return NotFound();
-            return View(driver);
+            return RedirectToAction("Drivers");
         }
 
         [HttpPost]
@@ -101,13 +111,18 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Drivers");
         }
 
-        
+        // ===============================================
         //             ROUTE MANAGEMENT
-        
+        // ===============================================
+
         [HttpGet]
         public IActionResult Routes()
         {
-            List<Route> allRoutes = route_dal.GetAllRoutes(conn);
+            List<Route> allRoutes = route_dal.GetAllRoutes(conn) ?? new List<Route>();
+
+            // Yahan hum Vehicles ko ViewBag mein bhej rahe hain taake Map par Trucks show ho sakein
+            ViewBag.AllVehicles = vehicle_dal.GetAllVehicles(conn) ?? new List<Vehicle>();
+
             return View(allRoutes);
         }
 
@@ -118,7 +133,7 @@ namespace Logitrack_ERP.Controllers
         public IActionResult CreateRoute(Route route)
         {
             route_dal.AddRoute(conn, route);
-            return RedirectToAction("Routes"); 
+            return RedirectToAction("Routes");
         }
 
         [HttpGet]

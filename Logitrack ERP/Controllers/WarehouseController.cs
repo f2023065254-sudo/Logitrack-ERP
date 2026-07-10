@@ -2,31 +2,37 @@
 using Logitrack_ERP.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+// NAYE USINGS (API CALLS KE LIYE)
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using Logitrack_ERP.Filters; // <-- 1. Security Filter yahan add kiya hai
 
 namespace Logitrack_ERP.Controllers
 {
-    public class WarehouseController : Controller
+    // <-- 2. Lock yahan lagaya hai (Owner, Manager aur Employee ke liye) -->
+    [RoleAccess("Owner", "Manager", "Employee")]
+    public class WarehouseController : BaseController
     {
         private readonly string conn;
         private Warehouse_DAL war_dal = new Warehouse_DAL();
         private IConfiguration config;
         private Inventory_DAL inv_dal = new Inventory_DAL();
-        
+
         public WarehouseController(IConfiguration config)
         {
             this.config = config;
             conn = config.GetConnectionString("DefaultConnection");
         }
 
-        
         [HttpGet]
         public IActionResult Index()
         {
-            
             return View(war_dal.GetAllWarehouses(conn));
         }
 
-       
         [HttpGet]
         public IActionResult Create()
         {
@@ -40,7 +46,6 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Index");
         }
 
-        
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -59,7 +64,6 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Index");
         }
 
-        
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -67,7 +71,6 @@ namespace Logitrack_ERP.Controllers
             return RedirectToAction("Index");
         }
 
-       
         [HttpGet]
         public IActionResult ShowWarehouseDetails(int id)
         {
@@ -75,9 +78,10 @@ namespace Logitrack_ERP.Controllers
             return View(warehouse);
         }
 
-      
+        // ===============================================
         //             INVENTORY MANAGEMENT
-        
+        // ===============================================
+
         [HttpGet]
         public IActionResult Inventory()
         {
@@ -85,10 +89,57 @@ namespace Logitrack_ERP.Controllers
             return View(allInventory);
         }
 
-        
         [HttpGet]
-        public IActionResult CreateInventory()
+        public async Task<IActionResult> CreateInventory()
         {
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+
+            using var _httpClient = new HttpClient(handler);
+            _httpClient.BaseAddress = new Uri("https://localhost:7286/"); // Make sure ye port API ki hai
+
+            // 1. Fetch Warehouses Dropdown Data (Safe method)
+            try
+            {
+                var whResponse = await _httpClient.GetAsync("api/warehouses/dropdown");
+                if (whResponse.IsSuccessStatusCode)
+                {
+                    string whJson = await whResponse.Content.ReadAsStringAsync();
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var warehouses = JsonSerializer.Deserialize<List<Warehouse>>(whJson, options);
+                    ViewBag.WarehouseList = new SelectList(warehouses, "WarehouseID", "WarehouseName");
+                }
+                else
+                {
+                    ViewBag.WarehouseList = new SelectList(new List<Warehouse>());
+                }
+            }
+            catch
+            {
+                ViewBag.WarehouseList = new SelectList(new List<Warehouse>());
+            }
+
+            // 2. Fetch Products Dropdown Data (Safe method)
+            try
+            {
+                var prodResponse = await _httpClient.GetAsync("api/products/dropdown");
+                if (prodResponse.IsSuccessStatusCode)
+                {
+                    string prodJson = await prodResponse.Content.ReadAsStringAsync();
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var products = JsonSerializer.Deserialize<List<Product>>(prodJson, options);
+                    ViewBag.ProductList = new SelectList(products, "ProductID", "ProductName");
+                }
+                else
+                {
+                    ViewBag.ProductList = new SelectList(new List<Product>());
+                }
+            }
+            catch
+            {
+                ViewBag.ProductList = new SelectList(new List<Product>());
+            }
+
             return View();
         }
 
@@ -120,6 +171,5 @@ namespace Logitrack_ERP.Controllers
             inv_dal.DeleteInventoryItem(conn, id);
             return RedirectToAction("Inventory");
         }
-
     }
 }

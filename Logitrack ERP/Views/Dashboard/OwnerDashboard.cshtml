@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "_Layout"; ViewData["Title"] = "Owner Dashboard";
+}
+<div style="font-family: 'Inter', sans-serif; padding: 20px;">
+    <h1 style="color: #0f172a; font-weight: 700;">Owner Command Center</h1>
+    <p style="color: #64748b; margin-bottom: 30px;">Welcome back! Here is your business overview for today.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+        <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 5px solid #2563eb;">
+            <span style="color: #64748b; font-size: 14px; font-weight: 500;">Total Monthly Revenue</span>
+            <h2 style="margin: 8px 0 0 0; color: #0f172a; font-size: 28px;">@ViewBag.TotalRevenue</h2>
+        </div>
+        <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 5px solid #10b981;">
+            <span style="color: #64748b; font-size: 14px; font-weight: 500;">Active Fleet Drivers</span>
+            <h2 style="margin: 8px 0 0 0; color: #0f172a; font-size: 28px;">@ViewBag.ActiveDrivers</h2>
+        </div>
+        <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 5px solid #f59e0b;">
+            <span style="color: #64748b; font-size: 14px; font-weight: 500;">Total Global Clients</span>
+            <h2 style="margin: 8px 0 0 0; color: #0f172a; font-size: 28px;">@ViewBag.TotalCustomers</h2>
+        </div>
+    </div>
+</div>

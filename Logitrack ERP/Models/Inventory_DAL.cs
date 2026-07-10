@@ -9,10 +9,11 @@ namespace Logitrack_ERP.Models
         // 1. CREATE
         public void AddInventoryItem(string conn, InventoryItem item)
         {
+            // Yahan @productName ki jagah (SELECT ProductName FROM PRODUCT WHERE ProductID = @productId) lagaya hai
             string query = @"INSERT INTO INVENTORY 
                              (WarehouseID, ProductID, Category, StockLevel, BatchNo, ProductName, LocationStorage)
                              VALUES 
-                             (@warehouseId, @productId, @category, @stockLevel, @batchNo, @productName, @locationStorage);";
+                             (@warehouseId, @productId, @category, @stockLevel, @batchNo, (SELECT ProductName FROM PRODUCT WHERE ProductID = @productId), @locationStorage);";
 
             using (SqlConnection connection = new SqlConnection(conn))
             {
@@ -23,8 +24,8 @@ namespace Logitrack_ERP.Models
                 cmd.Parameters.AddWithValue("@category", item.Category);
                 cmd.Parameters.AddWithValue("@stockLevel", item.StockLevel);
                 cmd.Parameters.AddWithValue("@batchNo", item.BatchNo);
-                cmd.Parameters.AddWithValue("@productName", item.ProductName);
                 cmd.Parameters.AddWithValue("@locationStorage", item.LocationStorage);
+                // @productName ka parameter hata diya gaya hai kyunke ab DB khud fetch karega
 
                 cmd.ExecuteNonQuery();
             }
@@ -94,13 +95,14 @@ namespace Logitrack_ERP.Models
         // 4. UPDATE
         public void UpdateInventoryItem(string conn, InventoryItem item)
         {
+            // Update mein bhi ProductName ko subquery se replace kiya gaya hai
             string query = @"UPDATE INVENTORY 
                              SET WarehouseID = @warehouseId,
                                  ProductID = @productId,
                                  Category = @category, 
                                  StockLevel = @stockLevel,
                                  BatchNo = @batchNo,
-                                 ProductName = @productName, 
+                                 ProductName = (SELECT ProductName FROM PRODUCT WHERE ProductID = @productId), 
                                  LocationStorage = @locationStorage
                              WHERE InventoryID = @id;";
 
@@ -114,7 +116,6 @@ namespace Logitrack_ERP.Models
                 cmd.Parameters.AddWithValue("@category", item.Category);
                 cmd.Parameters.AddWithValue("@stockLevel", item.StockLevel);
                 cmd.Parameters.AddWithValue("@batchNo", item.BatchNo);
-                cmd.Parameters.AddWithValue("@productName", item.ProductName);
                 cmd.Parameters.AddWithValue("@locationStorage", item.LocationStorage);
 
                 cmd.ExecuteNonQuery();

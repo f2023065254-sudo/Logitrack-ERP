@@ -1,124 +1,90 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Logitrack_ERP.Models;
+using Logitrack_ERP.Filters;
+using System.Collections.Generic;
+using System.Linq;
 using System;
 
 namespace Logitrack_ERP.Controllers
 {
-    public class ReportsController : Controller
+    [RoleAccess("Owner", "Manager")] // Sirf authorized roles ke liye
+    public class ReportsController : BaseController
     {
-        private readonly string _conn;
-        private readonly HttpClient _httpClient;
+        private readonly string conn;
+        private Order_DAL order_dal = new Order_DAL();
+        private Invoice_DAL invoice_dal = new Invoice_DAL();
 
-        // 1. Properly injecting IConfiguration
-        public ReportsController(IConfiguration config)
+        public ReportsController(IConfiguration configuration)
         {
-            // 2. Safely grabbing the connection string
-            _conn = config.GetConnectionString("DefaultConnection");
-
-            // 3. Pointing exactly to your API's port (7286 from your screenshot!)
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://localhost:7286/");
+            conn = configuration.GetConnectionString("DefaultConnection");
         }
-
 
         public IActionResult Index()
         {
+            var allOrders = order_dal.getallorders(conn) ?? new List<Order>();
+            var allInvoices = invoice_dal.GetAllInvoices(conn) ?? new List<Invoice>();
+
+            // 1. Top Cards Calculations (Real-Time)
+            decimal totalRevenue = allInvoices.Sum(i => (decimal)i.TotalAmount);
+            int totalOrders = allOrders.Count;
+
+            // On-Time Delivery Logic (Delivered orders divided by Total orders)
+            int deliveredOrders = allOrders.Count(o => o.Status.ToString() == "Delivered");
+            double onTimePercentage = totalOrders > 0 ? ((double)deliveredOrders / totalOrders) * 100 : 0;
+
+            // ViewBags mein data assign karein
+            ViewBag.TotalRevenue = totalRevenue >= 1000000
+                ? (totalRevenue / 1000000).ToString("0.##") + "M"
+                : totalRevenue.ToString("N0");
+            ViewBag.TotalOrders = totalOrders.ToString("N0");
+            ViewBag.OnTimeDelivery = Math.Round(onTimePercentage, 1) + "%";
+            ViewBag.EmployeeProductivity = "90%"; // Isay filhal static rakha hai, HR module se link kar sakte hain
+
+            // 2. Chart.js ke liye Monthly Data (Current Year)
+            int currentYear = DateTime.Now.Year;
+            var monthlyOrders = allOrders
+                .Where(o => o.OrderDate.Year == currentYear)
+                .GroupBy(o => o.OrderDate.Month)
+                .Select(g => new { Month = g.Key, Count = g.Count() })
+                .ToList();
+
+            // 12 mahinon ka array banayein (Jan to Dec)
+            int[] monthlyDataArray = new int[12];
+            foreach (var item in monthlyOrders)
+            {
+                monthlyDataArray[item.Month - 1] = item.Count;
+            }
+
+            // Array ko string mein convert kar ke view mein bhejein (e.g., "10,25,0,50...")
+            ViewBag.MonthlyChartData = string.Join(",", monthlyDataArray);
+
             return View();
         }
 
-
         // ==========================================
-        // 1. LOW STOCK REPORT
-        // ==========================================
-        [HttpGet]
-        public async Task<IActionResult> LowStock()
-        {
-            HttpResponseMessage response = await _httpClient.GetAsync("api/reports/low-stock");
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonString = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var reportData = JsonSerializer.Deserialize<ReportApiResponse<LowStockReportItem>>(jsonString, options);
-                return View(reportData);
-            }
-            ViewBag.ErrorMessage = "Failed to connect to the API. Is the Logitrack_API project running?";
-            return View(null);
-        }
-
-        // ==========================================
-        // 2. REVENUE SUMMARY
+        // DOWNLOAD RAW DATA AS CSV
         // ==========================================
         [HttpGet]
-        public async Task<IActionResult> RevenueSummary()
+        public IActionResult DownloadReportCsv()
         {
-            HttpResponseMessage response = await _httpClient.GetAsync("api/reports/revenue-summary");
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonString = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var reportData = JsonSerializer.Deserialize<ReportApiResponse<RevenueSummaryItem>>(jsonString, options);
-                return View(reportData);
-            }
-            ViewBag.ErrorMessage = "Failed to connect to the API.";
-            return View(null);
-        }
+            var allOrders = order_dal.getallorders(conn) ?? new List<Order>();
+            var allInvoices = invoice_dal.GetAllInvoices(conn) ?? new List<Invoice>();
 
-        // ==========================================
-        // 3. FLEET STATUS
-        // ==========================================
-        [HttpGet]
-        public async Task<IActionResult> FleetStatus()
-        {
-            HttpResponseMessage response = await _httpClient.GetAsync("api/reports/fleet-status");
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonString = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var reportData = JsonSerializer.Deserialize<ReportApiResponse<FleetStatusItem>>(jsonString, options);
-                return View(reportData);
-            }
-            ViewBag.ErrorMessage = "Failed to connect to the API.";
-            return View(null);
-        }
+            var builder = new System.Text.StringBuilder();
+            builder.AppendLine("Metric,Value");
+            builder.AppendLine($"Total Orders,{allOrders.Count}");
+            builder.AppendLine($"Total Revenue (PKR),{allInvoices.Sum(i => i.TotalAmount)}");
+            // 1. Calculation bahar nikal li (No syntax errors here)
+            int deliveredCount = allOrders.Count(o => o.Status.ToString() == "Delivered");
+            int pendingCount = allOrders.Count(o => o.Status.ToString() != "Delivered");
 
-        // ==========================================
-        // 4. EMPLOYEE HEADCOUNT
-        // ==========================================
-        [HttpGet]
-        public async Task<IActionResult> EmployeeHeadcount()
-        {
-            HttpResponseMessage response = await _httpClient.GetAsync("api/reports/employee-headcount");
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonString = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var reportData = JsonSerializer.Deserialize<ReportApiResponse<DepartmentHeadcountItem>>(jsonString, options);
-                return View(reportData);
-            }
-            ViewBag.ErrorMessage = "Failed to connect to the API.";
-            return View(null);
-        }
+            // 2. Ab variables ko cleanly string mein add kar diya
+            builder.AppendLine($"Delivered Orders,{deliveredCount}");
+            builder.AppendLine($"Pending/In-Transit,{pendingCount}");
 
-        // ==========================================
-        // 5. CRITICAL RISKS
-        // ==========================================
-        [HttpGet]
-        public async Task<IActionResult> CriticalRisks()
-        {
-            HttpResponseMessage response = await _httpClient.GetAsync("api/reports/critical-risks");
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonString = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var reportData = JsonSerializer.Deserialize<ReportApiResponse<CriticalRiskItem>>(jsonString, options);
-                return View(reportData);
-            }
-            ViewBag.ErrorMessage = "Failed to connect to the API.";
-            return View(null);
+            return File(System.Text.Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "Logitrack_Analytics_Summary.csv");
         }
     }
 }
+             

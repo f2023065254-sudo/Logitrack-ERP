@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace Logitrack_ERP.Controllers
 {
-    public class ProductController : BaseController
+    public class ManagerController : BaseController
     {
         private readonly string conn;
-        private Product_DAL product_dal = new Product_DAL();
+        private Manager_DAL manager_dal = new Manager_DAL();
 
-        public ProductController(IConfiguration configuration)
+        public ManagerController(IConfiguration configuration)
         {
             conn = configuration.GetConnectionString("DefaultConnection");
         }
@@ -18,42 +18,39 @@ namespace Logitrack_ERP.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<Product> products = product_dal.GetAllProducts(conn);
-            return View(products);
+            List<Manager> allManagers = manager_dal.GetAllManagers(conn);
+            return View(allManagers);
         }
 
         [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() { return View(); }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Create(Manager manager)
         {
-            product_dal.AddProduct(conn, product);
+            manager_dal.AddManager(conn, manager);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Product product = product_dal.GetProductById(conn, id);
-            if (product == null) return NotFound();
-            return View(product);
+            Manager manager = manager_dal.GetManagerById(conn, id);
+            if (manager == null) return NotFound();
+            return View(manager);
         }
 
         [HttpPost]
-        public IActionResult Edit(Product product)
+        public IActionResult Edit(Manager manager)
         {
-            product_dal.UpdateProduct(conn, product);
+            manager_dal.UpdateManager(conn, manager);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            product_dal.DeleteProduct(conn, id);
+            manager_dal.DeleteManager(conn, id);
             return RedirectToAction("Index");
         }
     }

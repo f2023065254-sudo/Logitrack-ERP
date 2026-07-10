@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "_Layout"; ViewData["Title"] = "Employee Desk";
+}
+<div style="font-family: 'Inter', sans-serif; padding: 20px;">
+    <h1 style="color: #0f172a; font-weight: 700;">My Workspace</h1>
+    <p style="color: #64748b; margin-bottom: 30px;">Update logistics tasks and keep records clean.</p>
+
+    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); max-width: 500px;">
+        <h4 style="margin-top: 0; color: #475569; font-weight: 600;">Shift Logs</h4>
+        <p style="color: #16a34a; font-size: 14px; font-weight: 500;"><i class="fa-solid fa-clock"></i> @ViewBag.AttendanceStatus</p>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;" />
+        <p style="color: #475569; font-size: 14px;"><strong>Current Assignment:</strong> @ViewBag.MyTasks</p>
+    </div>
+</div>

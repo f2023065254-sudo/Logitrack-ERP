@@ -30,10 +30,11 @@
 
                 <div class="input-group">
                     <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #475569;">Assigned Vehicle</label>
-                    <input type="text" name="AssignedVehicle" value="Unassigned" class="form-control" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" required />
-                    <span style="font-size: 0.8rem; color: #94a3b8; margin-top: 4px; display: block;">Leave as 'Unassigned' if no vehicle is allocated yet.</span>
+                    <select name="AssignedVehicle" class="form-control" asp-items="ViewBag.VehicleList" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" required>
+                        <option value="Unassigned">Unassigned</option>
+                    </select>
+                    <span style="font-size: 0.8rem; color: #94a3b8; margin-top: 4px; display: block;">Select a vehicle or leave as 'Unassigned'.</span>
                 </div>
-
                 <div class="input-group">
                     <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #475569;">Initial Status</label>
                     <select name="Status" class="form-control" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">

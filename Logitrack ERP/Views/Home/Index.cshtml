@@ -8,44 +8,44 @@
         <div class="metric-card">
             <div class="metric-header">
                 <div class="metric-icon bg-blue-tint"><i class="fa-solid fa-box-open text-blue"></i></div>
-                <span class="trend-indicator up"><i class="fa-solid fa-arrow-trend-up"></i> 12.5%</span>
+                <span class="trend-indicator up"><i class="fa-solid fa-arrow-trend-up"></i> Live</span>
             </div>
             <div class="metric-body">
                 <p class="metric-label">Total Orders</p>
-                <h3 class="metric-value">1,234</h3>
+                <h3 class="metric-value">@ViewBag.TotalOrders.ToString("N0")</h3>
             </div>
         </div>
 
         <div class="metric-card">
             <div class="metric-header">
                 <div class="metric-icon bg-green-tint"><i class="fa-solid fa-warehouse text-green"></i></div>
-                <span class="trend-indicator down"><i class="fa-solid fa-arrow-trend-down"></i> 3.2%</span>
+                <span class="trend-indicator up"><i class="fa-solid fa-arrow-trend-up"></i> Live</span>
             </div>
             <div class="metric-body">
                 <p class="metric-label">Warehouse Stock</p>
-                <h3 class="metric-value">45,678</h3>
+                <h3 class="metric-value">@ViewBag.TotalStock.ToString("N0")</h3>
             </div>
         </div>
 
         <div class="metric-card">
             <div class="metric-header">
                 <div class="metric-icon bg-purple-tint"><i class="fa-solid fa-truck-fast text-purple"></i></div>
-                <span class="trend-indicator up"><i class="fa-solid fa-arrow-trend-up"></i> 5.1%</span>
+                <span class="trend-indicator up"><i class="fa-solid fa-arrow-trend-up"></i> Live</span>
             </div>
             <div class="metric-body">
                 <p class="metric-label">Active Vehicles</p>
-                <h3 class="metric-value">87</h3>
+                <h3 class="metric-value">@ViewBag.ActiveVehicles</h3>
             </div>
         </div>
 
         <div class="metric-card">
             <div class="metric-header">
                 <div class="metric-icon bg-orange-tint"><i class="fa-solid fa-dollar-sign text-orange"></i></div>
-                <span class="trend-indicator up"><i class="fa-solid fa-arrow-trend-up"></i> 18.7%</span>
+                <span class="trend-indicator up"><i class="fa-solid fa-arrow-trend-up"></i> Live</span>
             </div>
             <div class="metric-body">
                 <p class="metric-label">Revenue (PKR)</p>
-                <h3 class="metric-value">2.5M</h3>
+                <h3 class="metric-value">@ViewBag.TotalRevenue.ToString("N0")</h3>
             </div>
         </div>
     </div>
@@ -102,12 +102,12 @@
         <div class="card">
             <h3 class="card-title">Order Status Distribution</h3>
             <div class="chart-container">
-                <div class="chart-label-left text-green">Delivered 88%</div>
+                <div class="chart-label-left text-green">Delivered @ViewBag.DeliveredPct%</div>
                 <div class="pie-chart"></div>
                 <div class="chart-labels-right">
-                    <span class="label-cancelled">Cancelled 2%</span>
-                    <span class="label-pending">Pending 4%</span>
-                    <span class="label-transit">In Transit 7%</span>
+                    <span class="label-cancelled">Cancelled @ViewBag.CancelledPct%</span>
+                    <span class="label-pending">Pending @ViewBag.PendingPct%</span>
+                    <span class="label-transit">In Transit @ViewBag.InTransitPct%</span>
                 </div>
             </div>
         </div>
@@ -115,77 +115,76 @@
         <div class="card">
             <h3 class="card-title">Recent Orders</h3>
             <div class="orders-list">
-                <div class="order-item">
-                    <div class="order-details">
-                        <h4 class="order-id">ORD-1234</h4>
-                        <p class="customer-name">Ahmed Khan</p>
-                        <span class="order-date">2026-05-18</span>
-                    </div>
-                    <div class="order-status-price">
-                        <span class="badge badge-delivered">Delivered</span>
-                        <p class="order-price">PKR 12,500</p>
-                    </div>
-                </div>
-                <div class="order-item">
-                    <div class="order-details">
-                        <h4 class="order-id">ORD-1235</h4>
-                        <p class="customer-name">Fatima Ali</p>
-                        <span class="order-date">2026-05-19</span>
-                    </div>
-                    <div class="order-status-price">
-                        <span class="badge badge-transit">In Transit</span>
-                        <p class="order-price">PKR 8,750</p>
-                    </div>
-                </div>
-                <div class="order-item">
-                    <div class="order-details">
-                        <h4 class="order-id">ORD-1236</h4>
-                        <p class="customer-name">Hassan Raza</p>
-                        <span class="order-date">2026-05-19</span>
-                    </div>
-                    <div class="order-status-price">
-                        <span class="badge badge-pending">Pending</span>
-                        <p class="order-price">PKR 15,200</p>
-                    </div>
-                </div>
-                <div class="order-item">
-                    <div class="order-details">
-                        <h4 class="order-id">ORD-1237</h4>
-                        <p class="customer-name">Ayesha Malik</p>
-                        <span class="order-date">2026-05-18</span>
-                    </div>
-                    <div class="order-status-price">
-                        <span class="badge badge-delivered">Delivered</span>
-                        <p class="order-price">PKR 9,300</p>
-                    </div>
-                </div>
+                @if (ViewBag.RecentOrders != null)
+                {
+                    @foreach (var order in ViewBag.RecentOrders)
+                    {
+                        <div class="order-item">
+                            <div class="order-details">
+                                <h4 class="order-id">ORD-@order.OrderID.ToString("D4")</h4>
+                                <p class="customer-name">@order.CustomerName</p>
+                                <span class="order-date">@order.OrderDate.ToString("yyyy-MM-dd")</span>
+                            </div>
+                            <div class="order-status-price">
+                                @{
+                                    // Assign appropriate badge color based on OrderStatus Enum
+                                    string badgeClass = order.Status.ToString() == "Delivered" ? "badge-delivered" :
+                                                        order.Status.ToString() == "Pending" ? "badge-pending" :
+                                                        order.Status.ToString() == "Cancelled" ? "badge-danger" : "badge-transit";
+
+                                    string statusText = order.Status.ToString().Replace("_", " ");
+                                }
+                                <span class="badge @badgeClass">@statusText</span>
+                                <p class="order-price">PKR @order.TotalAmount.ToString("N0")</p>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p style="color: #94a3b8; font-size: 0.9rem; text-align:center; padding: 20px;">No recent orders found.</p>
+                }
             </div>
         </div>
 
         <div class="card">
             <h3 class="card-title">Alerts & Notifications</h3>
             <div class="alerts-list">
-                <div class="alert-item">
-                    <i class="fa-solid fa-triangle-exclamation alert-icon-warning"></i>
-                    <div class="alert-content">
-                        <p class="alert-text">Low stock alert: Product #234 (Quantity: 5)</p>
-                        <span class="alert-time">2 hours ago</span>
+                @if (ViewBag.Alerts != null && ViewBag.Alerts.Count > 0)
+                {
+                    @foreach (var alert in ViewBag.Alerts)
+                    {
+                        // The controller passes the alert text and the severity type separated by a pipe '|'
+                        string[] alertParts = alert.Split('|');
+                        string alertMessage = alertParts[0];
+                        string alertType = alertParts.Length > 1 ? alertParts[1] : "warning";
+
+                        <div class="alert-item">
+                            @if (alertType == "warning")
+                            {
+                                <i class="fa-solid fa-triangle-exclamation alert-icon-warning"></i>
+                            }
+                            else
+                            {
+                                <i class="fa-solid fa-circle-xmark alert-icon-danger"></i>
+                            }
+                            <div class="alert-content">
+                                <p class="alert-text">@alertMessage</p>
+                                <span class="alert-time">Recent</span>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="alert-item">
+                        <i class="fa-solid fa-circle-check alert-icon-success"></i>
+                        <div class="alert-content">
+                            <p class="alert-text">All systems operating normally. No alerts.</p>
+                            <span class="alert-time">Just now</span>
+                        </div>
                     </div>
-                </div>
-                <div class="alert-item">
-                    <i class="fa-solid fa-circle-check alert-icon-success"></i>
-                    <div class="alert-content">
-                        <p class="alert-text">Vehicle V-045 maintenance completed</p>
-                        <span class="alert-time">4 hours ago</span>
-                    </div>
-                </div>
-                <div class="alert-item">
-                    <i class="fa-solid fa-circle-xmark alert-icon-danger"></i>
-                    <div class="alert-content">
-                        <p class="alert-text">Payment pending for Invoice #INV-892</p>
-                        <span class="alert-time">1 day ago</span>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>

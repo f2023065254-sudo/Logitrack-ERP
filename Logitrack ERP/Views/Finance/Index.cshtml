@@ -45,6 +45,15 @@
             <i class="fa-solid fa-plus"></i> Generate Invoice
         </a>
     </div>
+    <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <h2>Financial Billing & Invoices</h2>
+
+        <div>
+            <a asp-controller="Finance" asp-action="ExportInvoicesCsv" class="btn btn-success" style="margin-right: 10px;">
+                <i class="fa-solid fa-file-excel"></i> Export to Excel
+            </a>
+        </div>
+    </div>
 
     <div class="table-container" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
         <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">

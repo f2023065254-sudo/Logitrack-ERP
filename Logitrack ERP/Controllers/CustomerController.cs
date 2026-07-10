@@ -1,11 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Logitrack_ERP.Models;
+﻿using Logitrack_ERP.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Text.Json;
+using Logitrack_ERP.Filters; // <-- 1. Security Filter yahan add kiya hai
 
 namespace Logitrack_ERP.Controllers
 {
-    public class CustomerController : Controller
+    // <-- 2. Lock yahan lagaya hai (Owner, Manager aur Employee ke liye) -->
+    [RoleAccess("Owner", "Manager", "Employee")]
+    public class CustomerController : BaseController
     {
         private readonly string conn;
         private Customer_DAL cust_dal = new Customer_DAL();
@@ -15,7 +21,7 @@ namespace Logitrack_ERP.Controllers
             conn = configuration.GetConnectionString("DefaultConnection");
         }
 
-        
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -28,6 +34,7 @@ namespace Logitrack_ERP.Controllers
         {
             return View();
         }
+
 
         [HttpPost]
         public IActionResult Create(Customer cust)
